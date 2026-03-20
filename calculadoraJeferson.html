@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Calculadora Invidiual Projeto P.I.</h1>
+    <br>
+    <h2>Quanto tem de mercadoria no meu Silo</h2>
+    <br>
+    Informe a capacidade total do Silo (em sacas):
+    <input type="text" id="input_capacidade">
+    <br>
+    Informe o volume que está marcando atualmente no seu sensor (em porcentagem):
+    <input type="text" id="input_volume">
+    <br>
+    Valor da cotação atual da saca de grão:
+    <input type="text" id="input_cotacao">
+    <br>
+    <button onclick="calcular()">Calcular</button>
+    <br>
+    <div id="div_mensagem"></div>
+</body>
+</html>
+<script>
+    function calcular() {
+        let capacidade = Number(input_capacidade.value);
+        let volume = Number(input_volume.value);
+        let cotacao = Number(input_cotacao.value);
+        let totalSilo = (volume / 100) * capacidade;
+        let preco = totalSilo * cotacao;
+        let kg = totalSilo / 60;
+
+        if (volume <= 50) {
+            div_mensagem.innerHTML = `O seu Silo ainda está ${volume}% cheio, não é hora de vender.<br>
+            Mas vendendo hoje tudo que já armazenou, terá um retorno de R$ ${preco}. Equivalente á R$ ${kg} por kg.`
+        }
+        
+        if (volume > 50) {
+            div_mensagem.innerHTML = `O seu Silo já ultrapassou a metade da sua capacidade, e está ${volume}% cheio, já pode se organizar para a venda! <br>
+            Tudo que já armazenou, hoje está valendo R$ ${preco}. Equivalente á R$ ${kg} por kg.`
+        }
+        
+    }
+</script>
