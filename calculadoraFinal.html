@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Calculadora SMARTSILO</title>
+  </head>
+
+  <body>
+    <h1>CALCULADORA SMARTSILO</h1>
+    <div id="container">
+      <div class="container-calculadoras">
+        <h2>Metricas do Silo</h2>
+
+        <p>Número de identificacao do silo:</p>
+        <input type="text" id="input_identificador" /> <br /><br />
+
+        <p>Altura total do cilindro do silo (m):</p>
+        <input type="text" id="input_altura" value="0"/> <br /><br />
+
+        <p>Altura do cone até a base do cilindro(CASO A BASE SEJA CONICA)</p>
+        <input type="text" id="input_altura_cone" value="0"/> <br /><br />
+
+        <p>Raio do silo (m):</p>
+        <input type="text" id="input_raio" value="0"/> <br /><br />
+
+        <p>Distancia do sensor ate o grao (m):</p>
+        <input type="text" id="input_sensor" value="0"/> <br /><br />
+
+        <p>Alarme minimo (%):</p>
+        <input type="text" id="input_min" value="0"/> <br /><br />
+
+        <p>Alarme maximo (%):</p>
+        <input type="text" id="input_max" value="100"/> <br /><br />
+
+        <button onclick="calcularMedidas()">Calcular Metricas do Silo</button>
+
+        <div id="div_resultado"></div>
+      </div>
+      <div class="container-calculadoras">
+        <h2>Mercadoria Do Silo:</h2>
+        <p>Informe a capacidade total do Silo (em sacas):</p>
+        <br />
+        <input type="text" id="input_capacidade" />
+        <br />
+        <p>
+          Informe o volume que está marcando atualmente no seu sensor (em
+          porcentagem):
+        </p>
+        <input type="text" id="input_volume" />
+        <br />
+        <p>Valor da cotação atual da saca de grão:</p>
+        <br />
+        <input type="text" id="input_cotacao" />
+        <br />
+        <br />
+        <button onclick="calcular()">Calcular</button>
+        <br />
+        <div id="div_mensagem"></div>
+      </div>
+    </div>
+    <script>
+      function calcularMedidas(){
+        
+        let identificador = input_identificador.value;
+        let alturaCilindro = Number(input_altura.value);
+        let alturaCone = Number(input_altura_cone.value);
+        let raio = Number(input_raio.value);
+        let sensor = Number(input_sensor.value);
+        let minimo = Number(input_min.value);
+        let maximo = Number(input_max.value);
+
+        let pi = 3.14;
+        let area = pi * raio**2;  
+        let volumeCilindro = area * alturaCilindro;
+        let volumeTotalCone = (1/3) * area * alturaCone;
+        let volumeTotalSilo = volumeTotalCone + volumeCilindro;
+        let volumeGraos = 0;
+        if(sensor >= alturaCilindro){
+          let a = (alturaCilindro + alturaCone) - sensor;
+          volumeGraos += (1/3) * area * a;
+        }else{
+          let b = area * (alturaCilindro - sensor);
+          volumeGraos += volumeTotalCone + b;
+        }
+
+        let percentual = volumeGraos / volumeTotalSilo * 100;
+        if(percentual < minimo){
+          alert(`O silo ${identificador} está abaixo do limite mínimo de ${minimo}%. Volume atual: ${percentual.toFixed(2)}%`);
+
+        }else if(percentual > maximo){
+          alert(`O silo ${identificador} está acima do limite máximo de ${maximo}%. Volume atual: ${percentual.toFixed(2)}%`);
+        }else{
+          alert(`O silo ${identificador} está dentro dos limites estabelecidos. Volume atual: ${percentual.toFixed(2)}%`);
+        }  
+        
+        div_resultado.innerHTML = `Silo ${identificador} <br>
+        Volume total: ${volumeTotalSilo.toFixed(2)}m³ <br>
+        Volume ocupado por grãos: ${volumeGraos.toFixed(2)}m³ <br>
+        Percentual ocupado: ${percentual.toFixed(2)}% <br>
+        `
+      }
+
+     function calcular(){
+  let capacidade = Number(input_capacidade.value);
+  let volume = Number(input_volume.value);
+  let cotacao = Number(input_cotacao.value);
+
+  let totalSilo = (volume / 100) * capacidade;
+  let preco = totalSilo * cotacao;
+  let kg = totalSilo / 60;
+
+  if (volume <= 50) {
+    div_mensagem.innerHTML = `<br> O seu Silo ainda está ${volume}% cheio, não é hora de vender.<br>
+    Mas vendendo hoje tudo que já armazenou, terá um retorno de R$ ${preco.toFixed(2)}. 
+    Equivalente á R$ ${kg.toFixed(2)} por kg.`;
+  }
+
+  if (volume > 50) {
+    div_mensagem.innerHTML = `<br> O seu Silo já ultrapassou a metade da sua capacidade, e está ${volume}% cheio, já pode se organizar para a venda! <br>
+    Tudo que já armazenou, hoje está valendo R$ ${preco.toFixed(2)}. 
+    Equivalente á R$ ${kg.toFixed(2)} por kg.`;
+  }
+}
+    </script>
+  </body>
+</html>
