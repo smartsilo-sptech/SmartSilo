@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="./src/css/register-login.css">
     <link rel="stylesheet" href="./src/css/header.css">
 </head>
-<body>
+<body class="register">
     <header>
         <div class="header-content">
             <div class="header-left-side">
                 <div class="header-logo">
-                    <img src="" alt="Ícone da logo" height="" class="logo-icon">
+                    <img src="./src/img/icons/logo1.png" alt="Ícone da logo" height="40" class="logo-icon">
                     <img src="" alt="Título da logo" width="" class="logo-title">
                 </div>
             </div>
@@ -30,43 +30,45 @@
     </header>
 
     <main>
-        <div class="main-content">
+        <div class="left-face">
             <div class="main-left-side">
                 <div class="span-box">
                     <span>Registre-se para ter acesso à Dashboard.</span>
                 </div>
             </div>
+        </div>
 
+        <div class="right-face">
             <div class="main-right-side">
                 <div class="form-box">
                     <div class="form-title">
                         <img src="./src/img/icons/logo1.png" alt="Logo" height="60"><br>
                         <span>Bem-vindo(a) ao SmartSilo</span>
                     </div>
-
-                    <form id="registerForm">
-                        <label for="name">Nome:</label><br>
-                        <input type="text" id="name" name="name" placeholder="Insira seu nome" class="insert" required><br>
-
-                        <label for="email">E-Mail:</label><br>
-                        <input type="email" id="email" name="email" placeholder="Insira seu e-mail" class="insert" required><br>
-
-                        <label for="password">Senha:</label><br>
-                        <input type="password" id="password" name="password" placeholder="Crie uma senha" class="insert" required><br>
-
-                        <label for="confipassword">Confirmar Senha:</label><br>
-                        <input type="password" id="confipassword" name="confipassword" placeholder="Confirme a senha" class="insert" required><br>
-
-                        <div class="submit-button-box">
-                            <button type="submit" class="submit-button">Registrar-se</button>
-                        </div>
-                    </form>
-
-                    <span class="redirect">
-                        Já tem um usuário? <a href="./login.html">Entre</a>.
-                    </span>
                 </div>
             </div>
+
+            <form id="registerForm">
+                <label for="name">Nome:</label><br>
+                <input type="text" id="name" name="name" placeholder="Insira seu nome" class="insert" required><br>
+
+                <label for="email">E-Mail:</label><br>
+                <input type="email" id="email" name="email" placeholder="Insira seu e-mail" class="insert" required><br>
+
+                <label for="password">Senha:</label><br>
+                <input type="password" id="password" name="password" placeholder="Crie uma senha" class="insert" required><br>
+
+                <label for="confipassword">Confirmar Senha:</label><br>
+                <input type="password" id="confipassword" name="confipassword" placeholder="Confirme a senha" class="insert" required><br>
+
+                <div class="submit-button-box">
+                    <button type="submit" class="submit-button">REGISTRAR</button>
+                </div>
+            </form>
+
+            <span class="redirect">
+                Já tem um usuário? <a href="./login.html">Entre</a>.
+            </span>
         </div>
     </main>
 </body>
