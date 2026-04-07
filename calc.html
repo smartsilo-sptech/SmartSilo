@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+    <title>SmartSilo</title>
+    <link rel="stylesheet" href="./src/css/calc.css">
+    <link rel="stylesheet" href="./src/css/header.css">
+    <link rel="stylesheet" href="./src/css/global.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="header-left-side">
+                <div class="header-logo">
+                    <img src="./src/img/icons/logo1.png" alt="Ícone da logo" height="40" class="logo-icon">
+                    <img src="" alt="Título da logo" width="" class="logo-title">
+                </div>
+            </div>
+            <div class="header-right-side">
+                <a href="./index.html">Home</a>
+                <a href="./calc.html">Calculadora Financeira</a>
+                <div class="login-page-button">
+                    <a href="./login.html">Entrar</a>
+                </div>
+                <div class="register-page-button">
+                    <a href="./register.html">Registrar-se</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="app">
+        <h1>Calculadora Financeira</h1>
+        <h4>Preencha os dados e veja a análise ao lado</h4>
+        <div id="grid">
+            <div class="cartao">
+                <h2>DADOS DO ARMAZÉM</h2>
+                <label>Capacidade total (sacas)</label>
+                <input type="number" id="ipt_cap" value="10000">
+                <label>Preço da saca (R$)</label>
+                <input type="number" id="ipt_preco" value="120">
+                <label>Perda por umidade/pragas (%)</label>
+                <input type="number" id="ipt_perda" value="3">
+                <label>Perda por erro operacional (%)</label>
+                <input type="number" id="ipt_erro" value="1">
+                <label>Gasto mensal com medição manual (R$)</label>
+                <input type="number" id="ipt_obra" value="500">
+                <h2 style="margin-top:16px">SMARTSILO</h2>
+                <label>Eficiência (% redução das perdas)</label>
+                <input type="number" id="ipt_eficiencia" value="80">
+                <label>Custo do sistema (R$)</label>
+                <input type="number" id="ipt_custo" value="10000">
+                <button onclick="calcular()">Ver análise completa</button>
+            </div>
+            <div class="cartao">
+                <div id="placeholder_area">Preencha os dados e clique<br>em "Ver análise completa"</div>
+                
+                <div id="results_area" style="display:none">
+                    <h3>DIAGNÓSTICO</h3>
+                    <div class="duplas">
+                        <div><small>Sacas perdidas</small><b id="out_sacas">—</b></div>
+                        <div><small>Prejuízo estimado</small><b id="out_prej">—</b></div>
+                    </div>
+                    <h3>CUSTO OPERACIONAL</h3>
+                    <div class="duplas">
+                        <div><small>Mensal</small><b id="out_mensal">—</b></div>
+                        <div><small>Anual</small><b id="out_anual">—</b></div>
+                    </div>
+                    <hr>
+                    <h3>COMPARAÇÃO</h3>
+                    <div class="duplas">
+                        <div><small>Sem SmartSilo</small><b id="out_sem">—</b></div>
+                        <div><small>Com SmartSilo</small><b id="out_com">—</b></div>
+                        <div class="cheia"><small>Economia anual</small><b id="out_eco">—</b></div>
+                    </div>
+                    <h3>ROI</h3>
+                    <div class="duplas">
+                        <div class="cheia"><small>Payback estimado</small><b id="out_roi">—</b></div>
+                    </div>
+                    <h3>PROJEÇÃO DE ECONOMIA</h3>
+                    <div class="triplas">
+                        <div><small>1 ano</small><b id="out_1a">—</b></div>
+                        <div><small>3 anos</small><b id="out_3a">—</b></div>
+                        <div><small>5 anos</small><b id="out_5a">—</b></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calcular() {
+            let capacidade = Number(ipt_cap.value);
+            let preco = Number(ipt_preco.value);
+
+            let perda = Number(ipt_perda.value) / 100;
+            let erro = Number(ipt_erro.value) / 100;
+            let perdaTotal = perda + erro;
+
+            let custoMensal = Number(ipt_obra.value);
+            let eficiencia = Number(ipt_eficiencia.value) / 100;
+            let custoSistema = Number(ipt_custo.value);
+
+            let formatoBRL = { style: 'currency', currency: 'BRL' };
+
+            let sacasPerdidas = capacidade * perdaTotal;
+            let prejuizoAtual = sacasPerdidas * preco;
+
+            let custoAnual = custoMensal * 12;
+            let totalSemSistema = prejuizoAtual + custoAnual;
+
+            let novoPrejuizo = prejuizoAtual * (1 - eficiencia);
+            let totalComSistema = novoPrejuizo;
+
+            let economia = totalSemSistema - totalComSistema;
+
+            let payback = (custoSistema / economia) * 12;
+
+            out_sacas.innerHTML = `${sacasPerdidas.toFixed(0)}`;
+            out_roi.innerHTML = `${payback.toFixed(1)} meses`;
+            out_prej.innerHTML = `${prejuizoAtual.toLocaleString('pt-BR', formatoBRL)}`;
+            out_mensal.innerHTML = `${custoMensal.toLocaleString('pt-BR', formatoBRL)}`;
+            out_anual.innerHTML = `${custoAnual.toLocaleString('pt-BR', formatoBRL)}`;
+            out_sem.innerHTML = `${totalSemSistema.toLocaleString('pt-BR', formatoBRL)}`;
+            out_com.innerHTML = `${totalComSistema.toLocaleString('pt-BR', formatoBRL)}`;
+            out_eco.innerHTML = `${economia.toLocaleString('pt-BR', formatoBRL)}`;
+
+            out_1a.innerHTML = `${economia.toLocaleString('pt-BR', formatoBRL)}`;
+            out_3a.innerHTML = `${(economia * 3).toLocaleString('pt-BR', formatoBRL)}`;
+            out_5a.innerHTML = `${(economia * 5).toLocaleString('pt-BR', formatoBRL)}`;
+
+            placeholder_area.style.display = 'none';
+            results_area.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
