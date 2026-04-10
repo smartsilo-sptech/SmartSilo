@@ -66,7 +66,7 @@ const serial = async (
                 'INSERT INTO Registro (distancia_sensor, percentual_ocupacao) VALUES (?, ?)',
                 [distancia, percentual]
             );
-            console.log("valores inseridos no banco: ", percentual + ", " + distancia);
+            console.log("valores inseridos no banco: ", distancia + ", " + percentual);
 
         }
 
