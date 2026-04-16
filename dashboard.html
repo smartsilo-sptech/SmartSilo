@@ -3,31 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - SmartSilo</title>
-    <link rel="stylesheet" href="./src/css/global.css">
-    <link rel="stylesheet" href="./src/css/header.css">
+    <title>Visão Geral - Dashboard</title>
     <link rel="stylesheet" href="./src/css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <div class="header-left-side">
-                <div class="header-logo">
-                    <img src="" alt="Ícone da logo" height="" class="logo-icon">
-                    <img src="" alt="Título da logo" width="" class="logo-title">
+    <menu>
+        <div class="menu-content">
+            <div class="top-menu">
+                <div class="menu-message">
+                    <span class="menu-title">Dashboard <br> SmartSilo</span>
+                </div>
+                <div class="menu-navigation">
+
                 </div>
             </div>
-            <div class="header-right-side">
-                <a href="./index.html">Home</a>
-                <a href="./calc.html">Calculadora Financeira</a>
-                <div class="login-page-button">
-                    <a href="./login.html">Entrar</a>
+            <div class="down-menu">
+                <div class="user-img"></div>
+            </div>
+        </div>
+    </menu>
+    <main>
+        <div class="content">
+            <div class="message">
+                <span class="span_message">Olá Masashi Kishimoto!</span>
+                <span class="span_message">Visão Geral</span>
+            </div>
+            <div class="charts">
+                <div class="charts_left">
+                    <div class="left_charts_up">
+                        <div class="total_silos">
+                            <span class="span_total_silos">Total de Silos:</span>
+                        </div>
+                        <div class="alertas_ativos">
+                            <span class="span_alertas_ativos">Número de alertas ativos:</span>
+                        </div>
+                        <div class="status_geral">
+                            <span class="span_status_geral">Status Geral:</span>
+                        </div>
+                    </div>
+                    <div class="left_charts_down">
+                        <div class="silos_tempo_real">
+                            <canvas id="barras_tempo_real"></canvas>
+                        </div>
+                    </div>
                 </div>
-                <div class="register-page-button">
-                    <a href="./register.html">Registrar-se</a>
+                <div class="charts_right">
+                    <div class="right_charts_up">
+                        <div class="silos_alerta">
+                            <canvas id="linhas_alerta"></canvas>
+                        </div>
+                    </div>
+                    <div class="right_charts_down">
+                        <div class="faixas">
+                            <span class="span_faixas">Faixas:</span>
+                            <span class="faixa_ideal">Faixa Ideal: 0 - 90%</span>
+                            <span class="faixa_alerta">Faixa Alerta: 90 - 95%</span>
+                            <span class="faixa_critica">Faixa Crítica: 95 - 100%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="status">
+                <div class="message">
+                    <span class="span_message">Status:</span>
+                </div>
+                <div class="silos">
+                    <!--uma porrada de quadrados que serão gerados pelo js obvsbvsbafo\hsdvhaenca-->
                 </div>
             </div>
         </div>
-    </header>
+    </main>
+
+    <script>
+        var tempoReal = new Chart(document.getElementById('barras_tempo_real').getContext('2d'), {
+            type: 'bar',
+            data: {
+            labels: ['Silo 1', 'Silo 2', 'Silo 3', 'Silo 4', 'Silo 5', 'Silo 6', 'Silo 7', 'Silo 8', 'Silo 9', 'Silo 10'],
+            datasets: [{
+                label: 'Temperatura Média',
+                data: [22, 24, 27, 23, 20, 18],
+                backgroundColor: ['#0eac50']
+            }]
+            },
+            options: {
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Silos'
+                    },
+                    beginAtZero: true,
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Porcentagem de Ocupação'
+                    },
+                    beginAtZero: true
+                }
+            }
+            }
+        });
+
+        var alertaCritico = new Chart(document.getElementById('linhas_alerta').getContext('2d'), {
+            type: 'line',
+            data: {
+            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'],
+            datasets: [{
+                label: 'Temperatura Média',
+                data: [22, 24, 27, 23, 20, 18],
+                backgroundColor: ['#0eac50']
+            }]
+            },
+            options: {
+            scales: {
+                y: {
+                beginAtZero: true
+                }
+            }
+            }
+        });
+    </script>
 </body>
 </html>
