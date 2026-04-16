@@ -1,6 +1,8 @@
 * {
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-body {
+/* body {
     overflow: hidden;
 }
+A gente removeu isso pra tirar as setinhas dos botões de login e cadastro na aba da calculadora, 
+se quebrar em outro lugar tenta colocar isso de volta */
