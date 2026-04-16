@@ -6,7 +6,6 @@
     <title>Visão Geral - Dashboard</title>
     <link rel="stylesheet" href="./src/css/dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="./src/css/global.css">
 </head>
 <body>
     <menu>
@@ -34,13 +33,13 @@
                 <div class="charts_left">
                     <div class="left_charts_up">
                         <div class="total_silos">
-                            <span class="span_total_silos">Total de Silos: 10</span>
+                            <span class="span_total_silos">Total de Silos:</span>
                         </div>
                         <div class="alertas_ativos">
-                            <span class="span_alertas_ativos">Número de alertas ativos: </span>
+                            <span class="span_alertas_ativos">Número de alertas ativos:</span>
                         </div>
                         <div class="status_geral">
-                            <span class="span_status_geral">Status Geral: </span>
+                            <span class="span_status_geral">Status Geral:</span>
                         </div>
                     </div>
                     <div class="left_charts_down">
@@ -82,10 +81,10 @@
             data: {
             labels: ['Silo 1', 'Silo 2', 'Silo 3', 'Silo 4', 'Silo 5', 'Silo 6', 'Silo 7', 'Silo 8', 'Silo 9', 'Silo 10'],
             datasets: [{
-                label: 'Ocupação dos Silos em Tempo Real',
+                label: 'Temperatura Média',
                 data: [99, 12, 89, 3, 56, 91, 93, 65, 40, 8],
                 backgroundColor: function(context) {
-                    var valor = context.dataset.data[context.dataIndex];
+                    let valor = context.dataset.data[context.dataIndex];
                     if (valor >= 95) {
                         return '#AB0F0F';
                     } else if (valor >= 90) {
@@ -119,12 +118,11 @@
         var alertaCritico = new Chart(document.getElementById('linhas_alerta').getContext('2d'), {
             type: 'line',
             data: {
-            labels: [],
+            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'],
             datasets: [{
-                label: 'Silos em Estado de Alerta',
-                data: [],
-                backgroundColor: ['#FFCD04'],
-                borderColor: ['#FFCD04']
+                label: 'Temperatura Média',
+                data: [22, 24, 27, 23, 20, 18],
+                backgroundColor: ['#0eac50']
             }]
             },
             options: {
@@ -168,59 +166,10 @@
                 .catch(error => console.error('Erro ao obter dados:', error));
         }
 
-        function obterDadosAlerta(grafico) {
-            fetch('http://localhost:3300/sensores/digital')
-                .then(response => response.json())
-                .then(percentuais => {
-                    fetch('http://localhost:3300/sensores/status')
-                        .then(response => response.json())
-                        .then(statusValues => {
-                            if (paginacao['alerta'] == null) {
-                                paginacao['alerta'] = 0;
-                            }
-                            if (tempo['alerta'] == null) {
-                                tempo['alerta'] = 0;
-                            }
-
-                            var ultimaPaginacao = paginacao['alerta'];
-                            paginacao['alerta'] = percentuais.length;
-
-                            var i = ultimaPaginacao;
-                            while (i < percentuais.length) {
-                                var percentual = percentuais[i];
-                                var status = statusValues[i];
-                                i++;
-                                tempo['alerta']++;
-
-                                if (status == 0) {
-                                    continue;
-                                }
-
-                                if (grafico.data.labels.length == 10 && grafico.data.datasets[0].data.length == 10) {
-                                    grafico.data.labels.shift();
-                                    grafico.data.datasets[0].data.shift();
-                                }
-
-                                grafico.data.labels.push(tempo['alerta']);
-                                grafico.data.datasets[0].data.push(parseFloat(percentual));
-
-                                if (status == 2) {
-                                    grafico.data.datasets[0].borderColor = '#AB0F0F';
-                                } else {
-                                    grafico.data.datasets[0].borderColor = '#FFCD04';
-                                }
-
-                                grafico.update();
-                            }
-                        });
-                })
-                .catch(error => console.error('Erro ao obter dados:', error));
-        }
-
         setInterval(() => {
-            obterDados(tempoReal, 'digital');
-            obterDadosAlerta(alertaCritico);
-        }, 2000);
+            obterDados(tempoReal, 'analogico');
+            obterDados(alertaCritico, 'digital');
+        }, 1000);
     </script>
 </body>
 </html>

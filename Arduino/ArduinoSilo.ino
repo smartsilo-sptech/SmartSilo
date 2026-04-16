@@ -9,7 +9,8 @@ float alturaCone = 4.0;
 float raioSilo = 3.0;
 float pi = 3.14;
 
-float percentualLimite = 90.0;
+float percentualLimite = 95.0;
+float percentualAlerta = 90.0;
 float percentualMinimo = 10.0;
 
 float areaCirculo;
@@ -70,13 +71,13 @@ void loop() {
   Serial.print(';');
 
   if (percentual >= percentualLimite) {
-    Serial.print(1);
+    Serial.print(2);
   } 
-  else if (percentual >= percentualMinimo) {
-    Serial.print(0);
+  else if (percentual >= percentualAlerta) {
+    Serial.print(1);
   } 
   else {
-    Serial.print(1);
+    Serial.print(0);
   }
 
   Serial.println(";");

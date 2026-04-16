@@ -8,12 +8,13 @@ const SERIAL_BAUD_RATE = 9600;
 const SERVIDOR_PORTA = 3300;
 
 // habilita ou desabilita a inserção de dados no banco de dados
-const HABILITAR_OPERACAO_INSERIR = true;
+const HABILITAR_OPERACAO_INSERIR = false;
 
 // função para comunicação serial
 const serial = async (
     valoresDistancia,
     valoresPercentual,
+    valoresStatus
 ) => {
 
     // conexão com o banco de dados MySQL
@@ -53,10 +54,12 @@ const serial = async (
         const valores = data.split(';');
         const distancia = parseInt(valores[0]);
         const percentual = parseInt(valores[1]);
+        const status = parseInt(valores[2]);
 
         // armazena os valores dos sensores nos arrays correspondentes
-        valoresDistancia.push(percentual);
-        valoresPercentual.push(distancia);
+        valoresDistancia.push(distancia);
+        valoresPercentual.push(percentual);
+        valoresStatus.push(status);
 
         // insere os dados no banco de dados (se habilitado)
         if (HABILITAR_OPERACAO_INSERIR) {
@@ -81,7 +84,8 @@ const serial = async (
 // função para criar e configurar o servidor web
 const servidor = (
     valoresDistancia,
-    valoresPercentual
+    valoresPercentual,
+    valoresStatus
 ) => {
     const app = express();
 
@@ -104,6 +108,9 @@ const servidor = (
     app.get('/sensores/digital', (_, response) => {
         return response.json(valoresPercentual);
     });
+    app.get('/sensores/status', (_, response) => {
+        return response.json(valoresStatus);
+    })
 }
 
 // função principal assíncrona para iniciar a comunicação serial e o servidor web
@@ -111,16 +118,19 @@ const servidor = (
     // arrays para armazenar os valores dos sensores
     const valoresDistancia = [];
     const valoresPercentual = [];
+    const valoresStatus = [];
 
     // inicia a comunicação serial
     await serial(
         valoresDistancia,
-        valoresPercentual
+        valoresPercentual,
+        valoresStatus
     );
 
     // inicia o servidor web
     servidor(
         valoresDistancia,
-        valoresPercentual
+        valoresPercentual,
+        valoresStatus
     );
 })();
