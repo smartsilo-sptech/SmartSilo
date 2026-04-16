@@ -1,171 +1,121 @@
--- Criação do banco
-
 CREATE DATABASE sistema_silos;
 
 USE sistema_silos;
 
--- Criação e configuração das tabelas
-
-CREATE TABLE Usuario (
-    idUsuario INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(45),
-    email VARCHAR(45),
-    senha VARCHAR(45),
-    tipoUsuario VARCHAR(45),
-    dt_criacao DATE
+CREATE TABLE dono (
+idDono INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(45) NOT NULL,
+email VARCHAR(45) NOT NULL,
+senha VARCHAR(45) NOT NULL,
+dt_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+cpf CHAR(11) NOT NULL,
+telefone CHAR(11)
 );
 
-ALTER TABLE Usuario AUTO_INCREMENT = 1;
+INSERT INTO dono (nome, email, senha, CPF, telefone) VALUES
+('Claudio', 'claudio@sptech.school', 'senha123', 11122233344, 11912345678);
 
-CREATE TABLE Fazenda (
-    idFazenda INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(45),
-    cnpj CHAR(14),
-    cep CHAR(8),
-    tamanhoFazenda VARCHAR(45),
-    fk_usuario INT
+SELECT * FROM dono;
+
+CREATE TABLE empresa (
+idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(45) NOT NULL,
+cep CHAR(8) NOT NULL,
+telefone CHAR(11),
+cnpj CHAR(14) NOT NULL,
+fkDono INT,
+CONSTRAINT fk_dono_const FOREIGN KEY (fkDono) REFERENCES dono(idDono)
 );
 
-ALTER TABLE Fazenda AUTO_INCREMENT = 100;
+INSERT INTO empresa (nome, cep, cnpj, fkDono) VALUES
+('Yoki', '06753404', '12345678912345', 1);
 
-ALTER TABLE Fazenda
-ADD CONSTRAINT fk_usuario_fazenda
-FOREIGN KEY (fk_usuario)
-REFERENCES Usuario(idUsuario);
+SELECT * FROM empresa;
 
-CREATE TABLE Silos (
-    idSilos INT AUTO_INCREMENT PRIMARY KEY,
-    nomeSilo VARCHAR(45),
-    alturaTotal FLOAT,
-    volumeTotal FLOAT,
-    dt_cadastro DATE,
-    tipo_grao VARCHAR(45),
-    fk_fazenda INT
+CREATE TABLE funcionario (
+idFuncionario INT PRIMARY KEY AUTO_INCREMENT,
+tipoFuncionario VARCHAR(45) NOT NULL,
+nome VARCHAR(45) NOT NULL,
+email VARCHAR(45) NOT NULL,
+senha VARCHAR(45) NOT NULL,
+dt_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+fkEmpresa INT,
+CONSTRAINT fk_empresa_const FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
 );
 
-ALTER TABLE Silos AUTO_INCREMENT = 1000;
+INSERT INTO funcionario (tipoFuncionario, nome, email, senha, fkEmpresa) VALUES
+('Gerente', 'Pedro Ablublé', 'pedro@sptech.school', 'senha123', 1);
 
-ALTER TABLE Silos
-ADD CONSTRAINT fk_fazenda_silos
-FOREIGN KEY (fk_fazenda)
-REFERENCES Fazenda(idFazenda);
+SELECT * FROM funcionario;
 
-CREATE TABLE Registro (
-    idRegistro INT,
-    fk_silos INT,
-    distancia_sensor FLOAT,
-    percentual_ocupacao DECIMAL(5,2),
-    dt_registro DATETIME,
-    PRIMARY KEY (idRegistro, fk_silos)
+CREATE TABLE fazenda (
+idFazenda INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(45) NOT NULL,
+cep CHAR(8) NOT NULL,
+tamanhoFazenda VARCHAR(45),
+fkEmpresaDona INT,
+CONSTRAINT fk_empresadona_const FOREIGN KEY (fkEmpresaDona) REFERENCES empresa(idEmpresa)
 );
 
-ALTER TABLE Registro
-ADD CONSTRAINT fk_silos_registro
-FOREIGN KEY (fk_silos)
-REFERENCES Silos(idSilos);
+INSERT INTO fazenda (nome, cep, fkEmpresaDona) VALUES
+('Abelinha', '12345678', 1);
 
-CREATE TABLE Alerta (
-    idAlerta INT AUTO_INCREMENT PRIMARY KEY,
-    percentual_minimo DECIMAL(5,2),
-    percentual_maximo DECIMAL(5,2),
-    ativo TINYINT,
-    fk_registro INT,
-    fk_silos INT
+SELECT * FROM fazenda;
+
+CREATE TABLE silos (
+idSilos INT PRIMARY KEY AUTO_INCREMENT,
+nomeSilo VARCHAR(45) NOT NULL,
+volumeTotal FLOAT,
+dt_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
+tipo_grao VARCHAR(45),
+localSilo VARCHAR(45),
+limite_max DECIMAL(3,1),
+limite_min DECIMAL(3,1),
+fkFazenda INT,
+CONSTRAINT fk_fazenda_const FOREIGN KEY (fkFazenda) REFERENCES fazenda(idFazenda)
 );
 
-ALTER TABLE Alerta AUTO_INCREMENT = 10000;
+INSERT INTO silos (nomeSilo, fkFazenda) VALUES
+('Alpha', 1);
 
-ALTER TABLE Alerta
-ADD CONSTRAINT fk_alerta_registro
-FOREIGN KEY (fk_registro, fk_silos)
-REFERENCES Registro(idRegistro, fk_silos);
+SELECT * FROM silos;
 
--- Inserts 
+CREATE TABLE sensor (
+idSensor INT PRIMARY KEY AUTO_INCREMENT,
+numSensor VARCHAR(45) NOT NULL,
+fkSilo INT,
+CONSTRAINT fk_silo_const FOREIGN KEY (fkSilo) REFERENCES silos(idSilos)
+);
 
--- Usuario
-INSERT INTO Usuario (nome, email, senha, tipoUsuario, dt_criacao) VALUES
-('Claudio', 'claudio@gmail.com', '123', 'admin', '2026-01-01'),
-('Frizza', 'frizza@gmail.com', '321', 'user', '2026-02-01');
+INSERT INTO sensor (numSensor, fkSilo) VALUES
+('Sensor1A', 1);
 
--- Fazenda
-INSERT INTO Fazenda (nome, cnpj, cep, tamanhoFazenda, fk_usuario) VALUES
-('Fazenda A', '12345678901234', '11111111', '320', 1),
-('Fazenda B', '98765432109876', '22222222', '200', 2);
+SELECT * FROM sensor;
 
--- Silos
-INSERT INTO Silos (nomeSilo, alturaTotal, volumeTotal, dt_cadastro, tipo_grao, fk_fazenda) VALUES
-('Silo 1', 10, 500, '2024-03-01', 'Milho', 100),
-('Silo 2', 12, 600, '2024-03-02', 'Soja', 101);
+CREATE TABLE registro (
+idRegistro INT AUTO_INCREMENT,
+distancia_sensor FLOAT,
+percentual_ocupacao DECIMAL (3,1),
+dt_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
+ativo TINYINT,
+fkSensor INT,
+PRIMARY KEY (idRegistro, fkSensor),
+CONSTRAINT fk_sensor_const FOREIGN KEY (fkSensor) REFERENCES sensor(idSensor)
+);
 
--- Registro
-INSERT INTO Registro (idRegistro, fk_silos, distancia_sensor, percentual_ocupacao, dt_registro) VALUES
-(1, 1000, 2.5, 70.00, NOW()),
-(2, 1001, NULL, NULL, NOW());
+SELECT * FROM registro;
+TRUNCATE registro;
 
--- Alerta
-INSERT INTO Alerta (percentual_minimo, percentual_maximo, ativo, fk_registro, fk_silos) VALUES
-(20, 80, 1, 1, 1000),
-(10, 90, 1, 2, 1001);
 
--- Selects 
+CREATE TABLE alerta (
+idAlerta INT AUTO_INCREMENT,
+percentual_atingido DECIMAL(3,1) NOT NULL,
+dt_ocorrencia DATETIME DEFAULT CURRENT_TIMESTAMP,
+fkRegistro INT,
+fkSensor INT,
+PRIMARY KEY (idAlerta, fkRegistro, fkSensor),
+CONSTRAINT fk_sensorAlerta_const FOREIGN KEY (fkSensor) REFERENCES sensor(idSensor),
+CONSTRAINT fk_registroAlerta_const FOREIGN KEY (fkRegistro) REFERENCES registro(idRegistro)
+);
 
-SELECT Usuario.nome AS Usuario,
-Fazenda.nome AS Fazenda
-FROM Usuario
-JOIN Fazenda
-ON Fazenda.fk_usuario = Usuario.idUsuario;
-
-SELECT Usuario.nome AS Usuario,
-Fazenda.nome AS Fazenda,
-Silos.nomeSilo AS Silo
-FROM Usuario
-JOIN Fazenda
-ON Fazenda.fk_usuario = Usuario.idUsuario
-JOIN Silos
-ON Silos.fk_fazenda = Fazenda.idFazenda;
-
-SELECT Usuario.nome AS Usuario,
-Silos.nomeSilo AS Silo,
-Silos.tipo_grao AS Grao
-FROM Usuario
-JOIN Fazenda
-ON Fazenda.fk_usuario = Usuario.idUsuario
-JOIN Silos
-ON Silos.fk_fazenda = Fazenda.idFazenda
-WHERE Usuario.nome = 'Claudio';
-
-SELECT idRegistro,
-IFNULL(distancia_sensor, 'Sensor com defeito') AS Status
-FROM Registro;
-
-SELECT idRegistro,
-percentual_ocupacao,
-CASE
-    WHEN percentual_ocupacao < 20 THEN 'Baixo'
-    WHEN percentual_ocupacao BETWEEN 20 AND 80 THEN 'Normal'
-    WHEN percentual_ocupacao BETWEEN 81 AND 100 THEN 'Alto'
-    ELSE 'Erro'
-END AS Status
-FROM Registro;
-
-SELECT Usuario.nome AS Usuario,
-Fazenda.nome AS Fazenda,
-Silos.nomeSilo AS Silo,
-IFNULL(distancia_sensor, 'Sensor com defeito') AS Status,
-Registro.percentual_ocupacao AS Ocupacao,
-CASE
-	WHEN percentual_ocupacao IS NULL THEN 'Sem leitura'
-    WHEN Registro.percentual_ocupacao < Alerta.percentual_minimo THEN 'Abaixo'
-    WHEN Registro.percentual_ocupacao > Alerta.percentual_maximo THEN 'Acima'
-    ELSE 'Normal'
-END AS Status
-FROM Usuario
-LEFT JOIN Fazenda
-ON Fazenda.fk_usuario = Usuario.idUsuario
-LEFT JOIN Silos
-ON Silos.fk_fazenda = Fazenda.idFazenda
-LEFT JOIN Registro
-ON Registro.fk_silos = Silos.idSilos
-LEFT JOIN Alerta
-ON Alerta.fk_registro = Registro.idRegistro
-AND Alerta.fk_silos = Registro.fk_silos;
+SELECT * FROM alerta;
