@@ -8,7 +8,7 @@ const SERIAL_BAUD_RATE = 9600;
 const SERVIDOR_PORTA = 3300;
 
 // habilita ou desabilita a inserção de dados no banco de dados
-const HABILITAR_OPERACAO_INSERIR = false;
+const HABILITAR_OPERACAO_INSERIR = true;
 
 // função para comunicação serial
 const serial = async (
@@ -21,10 +21,10 @@ const serial = async (
     let poolBancoDados = mysql.createPool(
         {
             host: '127.0.0.1',
-            user: 'Usuário',
+            user: 'usuario',
             password: 'Urubu@100',
             database: 'sistema_silos',
-            port: 3306
+            port: 3307
         }
     ).promise();
 
@@ -52,8 +52,8 @@ const serial = async (
     arduino.pipe(new serialport.ReadlineParser({ delimiter: '\r\n' })).on('data', async (data) => {
         console.log(data);
         const valores = data.split(';');
-        const distancia = parseInt(valores[0]);
-        const percentual = parseInt(valores[1]);
+        const distancia = parseFloat(valores[0]);
+        const percentual = parseFloat(valores[1]);
         const status = parseInt(valores[2]);
 
         // armazena os valores dos sensores nos arrays correspondentes
@@ -66,10 +66,10 @@ const serial = async (
 
             // este insert irá inserir os dados na tabela "medida"
             await poolBancoDados.execute(
-                'INSERT INTO Registro (distancia_sensor, percentual_ocupacao) VALUES (?, ?)',
-                [distancia, percentual]
+                'INSERT INTO registro (distancia_sensor, percentual_ocupacao, ativo, fkSensor) VALUES (?, ?, ?, 1)',
+                [distancia, percentual, status]
             );
-            console.log("valores inseridos no banco: ", distancia + ", " + percentual);
+            console.log("valores inseridos no banco: ", distancia + ", " + percentual + ", " + status);
 
         }
 
