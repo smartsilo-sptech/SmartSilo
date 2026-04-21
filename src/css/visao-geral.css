@@ -1,0 +1,258 @@
+body {
+    display: flex;
+    margin: 0px;
+    background: #0eac50;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+/* --==== MAIN ====----------------------------------------------------- */
+
+main {
+    margin: 0px;
+    flex: 1;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+}
+
+.message {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #fafafa;
+}
+
+.span_message {
+    font-size: 30px;
+}
+
+.charts {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+
+.charts_left {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-right: 10px;
+}
+
+.left_charts_up {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: larger;
+    gap: 30px;
+}
+
+.total_silos {
+    display: flex;
+    justify-content: center;
+    border: 4px solid #189D50;
+    background: #fafafa;
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+}
+
+.alertas_ativos {
+    display: flex;
+    justify-content: center;
+    border: 4px solid #189D50;
+    background: #fafafa;
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+}
+
+.status_geral {
+    display: flex;
+    justify-content: center;
+    border: 4px solid #189D50;
+    background: #fafafa;
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+}
+
+.left_charts_down {
+    display: flex;
+    height: 400px;
+    margin-top: 10px;
+}
+
+.silos_tempo_real, .silos_alerta {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border: 4px solid #189D50;
+    background: #fafafa;
+    border-radius: 10px;
+}
+
+.charts-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: larger;
+}
+
+.silos_tempo_real {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+    padding-top: 20px;
+}
+
+.charts_right {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 80%;
+    margin-left: 10px;
+}
+
+.right_charts_up {
+    display: flex;
+    height: 320px;
+    margin-bottom: 10px;
+}
+
+.silos_alerta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.right_charts_down {
+    display: flex;
+    margin-top: 65px;
+}
+
+.faixas {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border: 4px solid #189D50;
+    background: #fafafa;
+    border-radius: 10px;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.span_faixas {
+    font-size: large;
+}
+
+.faixa_ideal {
+    color: #0eac50;
+}
+
+.faixa_alerta {
+    color: rgb(235, 199, 0);
+}
+
+.faixa_critica {
+    color: rgb(167, 0, 0);
+}
+
+
+/* -- STATUS ---------------------------------------------------------- */
+
+.status {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin-top: 30px;
+}
+
+.silos {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.box-silo-red {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(167, 0, 0);
+    height: 50px;
+    width: 100px;
+    border-radius: 10px;
+    padding: 8px;
+}
+
+.internal-box-red {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 137, 137);
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    font-size: larger;
+}
+
+.box-silo-green {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #17c707;
+    height: 50px;
+    width: 100px;
+    border-radius: 10px;
+    padding: 8px;
+}
+
+.internal-box-green {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #8efd84;
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    font-size: larger;
+}
+
+.box-silo-yellow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(235, 199, 0);
+    height: 50px;
+    width: 100px;
+    border-radius: 10px;
+    padding: 8px;
+}
+
+.internal-box-yellow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 238, 141);
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    font-size: larger;
+}
