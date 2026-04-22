@@ -1,0 +1,17 @@
+*{
+padding: 0px;
+margin: 0px;
+}
+
+.logo-title{
+    width: 7%;
+    padding: 15px;
+}
+
+.body-content{
+width: 50%;
+background: #0FAB51;
+display: flex;
+align-items: center;
+padding-bottom: 100%;
+}
