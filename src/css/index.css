@@ -1,6 +1,7 @@
 *{
-padding: 0px;
-margin: 0px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .logo-title{
@@ -15,3 +16,4 @@ display: flex;
 align-items: center;
 padding-bottom: 100%;
 }
+
