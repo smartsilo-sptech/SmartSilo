@@ -4,13 +4,22 @@ float distancia = 0;
 int trig = 9;
 int echo = 10;
 
-float alturaCilindro = 11.0;
-float alturaCone = 4.0;
-float raioSilo = 3.0;
+//float alturaCilindro = 11.0;
+//float alturaCone = 4.0;
+//float raioSilo = 3.0;
+//float pi = 3.14;
+
+//float percentualLimite = 95.0;
+//float percentualAlerta = 90.0;
+//float percentualMinimo = 10.0;
+
+float alturaCilindro = 0.156;
+float alturaCone = 0.0568;
+float raioSilo = 0.0426;
 float pi = 3.14;
 
-float percentualLimite = 95.0;
-float percentualAlerta = 90.0;
+float percentualLimite = 85.0;
+float percentualAlerta = 75.0;
 float percentualMinimo = 10.0;
 
 float areaCirculo;
