@@ -21,7 +21,7 @@ float volumeGraos = 0;
 
 void setup() {
   Serial.begin(9600);
-  
+
   pinMode(trig, OUTPUT);
   pinMode(echo, INPUT);
 
@@ -36,10 +36,10 @@ void loop() {
   // Disparo do sensor
   digitalWrite(trig, LOW);
   delayMicroseconds(2);
-  
+
   digitalWrite(trig, HIGH);
   delayMicroseconds(10);
-  
+
   digitalWrite(trig, LOW);
 
   tempo = pulseIn(echo, HIGH);
@@ -72,10 +72,10 @@ void loop() {
 
   if (percentual >= percentualLimite) {
     Serial.print(2);
-  } 
+  }
   else if (percentual >= percentualAlerta) {
     Serial.print(1);
-  } 
+  }
   else {
     Serial.print(0);
   }

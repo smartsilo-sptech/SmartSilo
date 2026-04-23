@@ -87,9 +87,6 @@ fkSilo INT,
 CONSTRAINT fk_silo_const FOREIGN KEY (fkSilo) REFERENCES silos(idSilos)
 );
 
-INSERT INTO sensor (numSensor, fkSilo) VALUES
-('Sensor1A', 1);
-
 SELECT * FROM sensor;
 
 CREATE TABLE registro (
@@ -119,3 +116,5 @@ CONSTRAINT fk_registroAlerta_const FOREIGN KEY (fkRegistro) REFERENCES registro(
 );
 
 SELECT * FROM alerta;
+
+SHOW DATABASES;
