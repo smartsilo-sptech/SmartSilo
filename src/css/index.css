@@ -44,23 +44,6 @@ h2 {
     color: whitesmoke;
 }
 
-.corpo-do-coiso .body-txt {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    /* padding-top: 90px; */
-    border: 2px solid #0FAB51;
-    background-color: #0FAB51;
-    border-radius: 8px;
-    opacity: 70%;
-}
-.texto {
-    font-size: larger;
-    color: whitesmoke;
-    opacity: 100%;
-}
-
 .quem-somos {
     display: flex;
     font-size: 50px;
@@ -77,6 +60,22 @@ h2 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.body-txt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    /* padding-top: 90px; */
+    border: 2px solid #0fab5080;
+    background-color: #0fab5080;
+    border-radius: 8px;
+}
+
+.texto {
+    font-size: larger;
+    color: whitesmoke;
 }
 
 .imagem {
