@@ -4,6 +4,15 @@
     box-sizing: border-box;
 }
 
+body {
+  background-image: url(../img/silo.png);
+  background-repeat: no-repeat;  /* Prevents the image from tiling */
+  background-size: cover;       /* Scales image to fill container without distortion */
+  background-position: center;   /* Centers the image */
+  background-attachment: fixed;  /* Keeps image fixed while scrolling (optional) */
+  min-height: 100vh;             /* Ensures body is at least as tall as the screen */
+}
+
 main {
     display: flex;
     flex-direction: column;
@@ -25,29 +34,42 @@ main {
 h1 {
     padding-top: 180px;
     font-size: xx-large;
+    color: whitesmoke;
 }
 
 h2 {
     font-size: x-large;
     padding-top: 180px;
     padding-bottom: 180px;
+    color: whitesmoke;
 }
 
-.body-img {
+.body-txt {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 90px;
-    padding-bottom: 90px;
+    padding: 20px;
+    /* padding-top: 90px; */
+    border: 2px solid #0FAB51;
+    background-color: #0FAB51;
+    border-radius: 8px;
+    opacity: 70%;
+}
+.texto {
+    font-size: larger;
+    color: whitesmoke;
+    opacity: 100%;
 }
 
 .quem-somos {
     display: flex;
-    font-size: xx-large;
-    justify-content: flex-start;
+    font-size: 50px;
+    justify-content: center;
     width: 100%;
     padding-top: 1%;
     padding: 30px;
+    font-weight: bold;
+    color: #104b11;
 }
 
 .corpo-do-coiso {
