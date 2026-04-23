@@ -30,7 +30,7 @@ ON r.fkSensor = sensor.idSensor
 LEFT JOIN silos
 ON sensor.fkSilo = silos.idSilos;
 
-SELECT nomeSilo, percentual_ocupacao, dt_registro,
+SELECT nomeSilo AS Silo, percentual_ocupacao AS 'Ocupação(%)', dt_registro AS 'Data/Hora',
 	CASE WHEN ativo = 2 THEN 'Crítico'
     WHEN ativo = 1 THEN 'Alerta'
     ELSE 'Ideal'
