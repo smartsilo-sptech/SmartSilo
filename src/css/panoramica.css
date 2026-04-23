@@ -1,0 +1,107 @@
+body {
+    display: flex;
+    margin: 0px;
+    background: #0eac50;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+main {
+    margin: 0px;
+    flex: 1;
+}
+
+/* --==== MAIN ====----------------------------------------------------- */
+
+.content {
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+}
+
+.message {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #fafafa;
+}
+
+.span_message {
+    font-size: 30px;
+}
+
+/* -- FILTROS ---------------------------------------------------------- */
+
+.filtros {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filtro-label {
+    font-weight: bold;
+    font-size: larger;
+    color: #fafafa;
+}
+
+.btn-filtro {
+    border: 4px solid #189D50;
+    background: #fafafa;
+    border-radius: 10px;
+    padding: 6px 16px;
+    font-weight: bold;
+    font-size: medium;
+    cursor: pointer;
+}
+
+.btn-filtro.active {
+    background: #189D50;
+    color: #fafafa;
+}
+
+/* -- GRID DE SILOS ---------------------------------------------------- */
+
+.grid-silos {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card-silo {
+    display: flex;
+    flex-direction: column;
+    border: 4px solid #189D50;
+    background: #fafafa;
+    border-radius: 10px;
+    padding: 10px;
+    width: 300px;
+}
+
+.card-titulo {
+    font-size: larger;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.card-info {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    font-size: medium;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.info-ocupacao-verde { color: #0eac50; }
+.info-ocupacao-amarelo { color: rgb(235, 199, 0); }
+.info-ocupacao-vermelho { color: rgb(167, 0, 0); }
+
+.card-chart-wrapper {
+    position: relative;
+    width: 100%;
+    height: 150px;
+}

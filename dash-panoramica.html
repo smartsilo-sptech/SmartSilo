@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panorâmica - Dashboard</title>
+    <link rel="stylesheet" href="./src/css/menu.css">
+    <link rel="stylesheet" href="./src/css/panoramica.css">
+    <link rel="stylesheet" href="./src/css/global.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <menu>
+        <div class="menu-content">
+            <div class="top-menu">
+                <div class="menu-message">
+                    <a href="./index.html">
+                        <span class="menu-title">Dashboard<br>SmartSilo</span>
+                    </a>
+                </div>
+                <div class="menu-navigation">
+                    <div id="link">
+                        <a href="./dash-visao-geral.html">
+                            <span class="span-link">- Visão Geral</span>
+                        </a>
+                    </div>
+                    <div id="link">
+                        <a href="./dash-panoramica.html">
+                            <span class="span-link">- Panorâmica</span>
+                        </a>
+                    </div>
+                    <div id="link">
+                        <a href="./dash-historico-alertas.html">
+                            <span class="span-link">- Histórico de Alertas</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-menu">
+                <span class="user-name">Claudio Frizzarini</span>
+            </div>
+        </div>
+    </menu>
+    <main>
+        <div class="content">
+            <div class="message">
+                <span class="span_message">Olá Claudio Frizzarini!</span>
+                <span class="span_message">Panorâmica dos Silos</span>
+            </div>
+
+            <div class="grid-silos" id="grid-silos">
+            </div>
+        </div>
+    </main>
+
+    <script src="./src/js/panoramica.js"></script>
+</body>
+</html>

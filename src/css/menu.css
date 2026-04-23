@@ -40,9 +40,7 @@ menu {
     gap: 8px;
 }
  
-#link-tab-geral a,
-#link-historico a,
-#link-visao-geral a {
+#link a {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -54,14 +52,12 @@ menu {
     text-decoration: none;
 }
  
-#link-tab-geral a:hover,
-#link-historico a:hover,
-#link-visao-geral a:hover {
+#link a:hover {
     background: rgba(255, 255, 255, 0.15);
 }
  
 .span-link {
-    font-size: 13px;
+    font-size: large;
     color: white;
 }
  

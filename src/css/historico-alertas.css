@@ -55,23 +55,36 @@ main {
     border-radius: 10px;
     gap: 10px;
     overflow-y: scroll;
+    font-size: large;
 }
 
 .box-alert-yellow {
     display: flex;
-    background-color: rgb(255, 218, 95);
+    justify-content: space-between;
+    background-color: #FFCD04;
     padding: 10px;
     border-radius: 5px;
 }
 
 .box-alert-red {
     display: flex;
-    background-color: rgb(202, 65, 65);
+    justify-content: space-between;
+    background-color: rgb(167, 0, 0);
     color: #fafafa;
     padding: 10px;
     border-radius: 5px;
 }
 
-.span-alert {
-    font-size: large;
+.span-data-alert {
+    width: 300px;
+}
+
+.span-msg-alert {
+    width: 300px;
+}
+
+.span-faixa-alert {
+    display: flex;
+    justify-content: flex-end;
+    width: 300px;
 }

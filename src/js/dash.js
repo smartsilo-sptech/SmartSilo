@@ -47,7 +47,7 @@ var tempoReal = new Chart(document.getElementById('barras_tempo_real').getContex
             y: {
                 title: {
                     display: true,
-                    text: 'Porcentagem de Ocupação'
+                    text: 'Porcentagem de Ocupação (%)'
                 },
                 beginAtZero: true
             }
@@ -61,61 +61,61 @@ var alertaCritico = new Chart(document.getElementById('linhas_alerta').getContex
     labels: ['11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'],
     datasets: [{
         label: 'Silo 1',
-        data: [7, 23, 45, 62, 81, 99, 99],
+        data: [7, 23, 45, 62, 81, 78, 75],
         hidden: false,
         backgroundColor: ['rgb(167, 0, 0)'],
         borderColor: ['rgb(167, 0, 0)']
     }, {
         label: 'Silo 2',
-        data: [3, 18, 34, 56, 77, 90, 91],
+        data: [22, 18, 34, 56, 77, 60, 45],
         hidden: true,
         backgroundColor: ['#189D50'],
         borderColor: ['#189D50']
     }, {
         label: 'Silo 3',
-        data: [12, 29, 41, 68, 84, 100, 93],
+        data: [12, 29, 41, 68, 84, 73, 67],
         hidden: true,
-        backgroundColor: ['#189D50'],
-        borderColor: ['#189D50']
+        backgroundColor: ['#FFCD04'],
+        borderColor: ['#FFCD04']
     }, {
         label: 'Silo 4',
-        data: [3, 17, 28, 46, 72, 89, 93],
+        data: [2, 17, 28, 46, 72, 60, 53],
         hidden: true,
         backgroundColor: ['#189D50'],
         borderColor: ['#189D50']
     }, {
         label: 'Silo 5',
-        data: [6, 14, 35, 51, 68, 94, 93],
+        data: [9, 14, 35, 51, 68, 60, 56],
         hidden: true,
         backgroundColor: ['#189D50'],
         borderColor: ['#189D50']
     }, {
         label: 'Silo 6',
-        data: [1, 22, 39, 57, 75, 97, 93],
+        data: [25, 22, 39, 57, 40, 40, 26],
         hidden: true,
-        backgroundColor: ['#FFCD04'],
-        borderColor: ['#FFCD04']
+        backgroundColor: ['rgb(167, 0, 0)'],
+        borderColor: ['rgb(167, 0, 0)']
     }, {
         label: 'Silo 7',
-        data: [9, 26, 44, 63, 81, 100, 93],
+        data: [14, 26, 44, 63, 81, 100, 71],
         hidden: true,
         backgroundColor: ['#FFCD04'],
         borderColor: ['#FFCD04']
     }, {
         label: 'Silo 8',
-        data: [5, 19, 31, 54, 77, 92, 93],
+        data: [12, 19, 31, 54, 77, 67, 65],
         hidden: true,
-        backgroundColor: ['#189D50'],
-        borderColor: ['#189D50']
+        backgroundColor: ['#FFCD04'],
+        borderColor: ['#FFCD04']
     }, {
         label: 'Silo 9',
-        data: [2, 24, 38, 59, 83, 96, 93],
+        data: [67, 24, 38, 59, 50, 42, 40],
         hidden: true,
-        backgroundColor: ['#189D50'],
-        borderColor: ['#189D50']
+        backgroundColor: ['#FFCD04'],
+        borderColor: ['#FFCD04']
     }, {
         label: 'Silo 10',
-        data: [8, 21, 47, 66, 79, 90, 93],
+        data: [30, 21, 47, 66, 79, 53, 49],
         hidden: true,
         backgroundColor: ['#189D50'],
         borderColor: ['#189D50']
