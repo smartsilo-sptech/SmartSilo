@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+main {
+    display: flex;
+    flex-direction: column;
+}
+
 .logo-title {
     width: 7%;
     padding: 15px;
@@ -31,19 +36,27 @@ h2 {
 .body-img {
     display: flex;
     justify-content: center;
+    align-items: center;
     padding-top: 90px;
     padding-bottom: 90px;
-    flex-shrink: 3;
 }
 
 .quem-somos {
     display: flex;
     font-size: xx-large;
     justify-content: flex-start;
-    padding-left: 10%;
+    width: 100%;
     padding-top: 1%;
+    padding: 30px;
 }
 
 .corpo-do-coiso {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagem {
+    height: 500px;
 }
