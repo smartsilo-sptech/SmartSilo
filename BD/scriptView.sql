@@ -29,3 +29,14 @@ LEFT JOIN sensor
 ON r.fkSensor = sensor.idSensor
 LEFT JOIN silos
 ON sensor.fkSilo = silos.idSilos;
+
+SELECT nomeSilo, percentual_ocupacao, dt_registro,
+	CASE WHEN ativo = 2 THEN 'Crítico'
+    WHEN ativo = 1 THEN 'Alerta'
+    ELSE 'Ideal'
+    END AS 'Status' 
+    FROM silos
+    JOIN sensor 
+    ON idSilos = fkSilo
+    JOIN registro 
+    ON idSensor = fkSensor;
