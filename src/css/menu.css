@@ -3,9 +3,13 @@ menu {
     flex-direction: column;
     margin: 0px;
     width: 162px;
-    height: 100vh;
+    min-height: 100vh;
     background: #116b34;
     padding: 0px;
+}
+
+a {
+    text-decoration: none;
 }
  
 .menu-content {

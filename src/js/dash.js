@@ -128,7 +128,7 @@ var alertaCritico = new Chart(document.getElementById('linhas_alerta').getContex
             y: {
                 title: {
                     display: true,
-                    text: 'Porcentagem de Ocupação'
+                    text: 'Porcentagem de Ocupação (%)'
                 },
                 beginAtZero: true
             },
