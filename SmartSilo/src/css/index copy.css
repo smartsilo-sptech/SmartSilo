@@ -10,72 +10,6 @@ body {
     color: #333;
 }
 
-.header {
-    width: 100%;
-    height: 85px;
-
-    position: fixed;
-    top: 0;
-    z-index: 1000;
-
-    background-color: white;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-}
-
-.header-content {
-    width: 90%;
-    height: 100%;
-
-    margin: auto;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.header-logo img {
-    height: 60px;
-}
-
-.header-menu {
-    display: flex;
-    align-items: center;
-    gap: 22px;
-}
-
-.header-menu a {
-    text-decoration: none;
-    color: #333;
-
-    font-size: 15px;
-    font-weight: 600;
-
-    transition: 0.3s;
-}
-
-.header-menu a:hover {
-    color: #2f7d3d;
-}
-
-.btn-login {
-   border: 2px solid #2f7d3d;
-
-    color: #2f7d3d !important;
-
-    padding: 10px 22px;
-
-    border-radius: 8px;
-
-    text-decoration: none;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-weight: 600;
-}
-
-.btn-register,
 .btn-primary,
 .btn-secondary {
     padding: 12px 24px;
@@ -92,15 +26,9 @@ body {
     color: #2f7d3d;
 }
 
-.btn-register,
 .btn-primary {
     background-color: #2f7d3d;
     color: white;
-}
-
-.btn-login:hover {
-    background-color: #2f7d3d;
-    color: white !important;
 }
 
 .btn-secondary:hover {
@@ -108,7 +36,6 @@ body {
     color: white;
 }
 
-.btn-register:hover,
 .btn-primary:hover {
     background-color: #256632;
 }
