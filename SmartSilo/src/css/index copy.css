@@ -13,12 +13,9 @@ body {
 .btn-primary,
 .btn-secondary {
     padding: 12px 24px;
-
     border-radius: 8px;
-
     font-weight: 600;
-
-    transition: 0.3s;
+    text-decoration: none;
 }
 
 .btn-secondary {
@@ -43,7 +40,6 @@ body {
 .hero {
     width: 100%;
     min-height: 100vh;
-
     margin: auto;
 
     display: flex;
@@ -95,7 +91,6 @@ body {
 
 .section {
     width: 85%;
-
     margin: 80px auto;
     padding: 50px;
 
@@ -106,10 +101,7 @@ body {
     gap: 50px;
 
     background-color: white;
-
     border-radius: 20px;
-
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
 }
 
 .reverse {
