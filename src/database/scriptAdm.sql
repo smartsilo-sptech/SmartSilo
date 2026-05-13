@@ -18,7 +18,7 @@ INSERT INTO dono (nome, email, senha, CPF, telefone) VALUES
 SELECT * FROM dono;
 
 CREATE TABLE empresa (
-idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
+idEmpresa INT PRIMARY KEY,
 nome VARCHAR(45) NOT NULL,
 cep CHAR(8) NOT NULL,
 telefone CHAR(11),
@@ -27,8 +27,8 @@ fkDono INT,
 CONSTRAINT fk_dono_const FOREIGN KEY (fkDono) REFERENCES dono(idDono)
 );
 
-INSERT INTO empresa (nome, cep, cnpj, fkDono) VALUES
-('Yoki', '06753404', '12345678912345', 1);
+INSERT INTO empresa (idEmpresa, nome, cep, cnpj, fkDono) VALUES
+(123456, 'Yoki', '06753404', '12345678912345', 1);
 
 SELECT * FROM empresa;
 
