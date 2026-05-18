@@ -1,53 +1,87 @@
-header {
-    background: #189D50;
-    padding: 14px 48px;
-    height: 60px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    position: relative;
-    z-index: 10;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f6f5;
+    color: #333;
+}
+
+.header {
     width: 100%;
+    height: 85px;
+
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+
+    background-color: white;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
- 
+
 .header-content {
-    display: flex;
+    width: 90%;
     height: 100%;
+
+    margin: auto;
+
+    display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
 }
- 
-.header-left-side {
+
+.header-logo img {
+    height: 60px;
+}
+
+.header-menu {
     display: flex;
     align-items: center;
+    gap: 22px;
 }
- 
-.header-right-side {
+
+.header-menu a {
+    text-decoration: none;
+    color: #333;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    transition: 0.3s;
+}
+
+.header-menu a:hover {
+    color: #2f7d3d;
+}
+
+.btn-login {
+   border: 2px solid #2f7d3d;
+    color: #2f7d3d !important;
+    padding: 10px 22px;
+    border-radius: 8px;
+    text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 20px;
+    justify-content: center;
+    font-weight: 600;
 }
- 
-.header-right-side a {
-    color: white;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
+
+.btn-register {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    background-color: #2f7d3d;
+    color: black !important;
 }
- 
-.header-right-side a:hover {
-    text-decoration: underline;
+
+.btn-register:hover{
+    color: white !important;
 }
- 
-.login-page-button a,
-.register-page-button a {
-    background: white;
-    color: #0FAB51;
-    padding: 8px 18px;
-    border-radius: 6px;
-    font-weight: 700;
-}
- 
-.login-page-button a:hover,
-.register-page-button a:hover {
-    background: #e8e8e8;
-    text-decoration: none;
+
+.btn-login:hover {
+    background-color: #2f7d3d;
+    color: white !important;
 }
