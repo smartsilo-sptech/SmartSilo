@@ -26,6 +26,15 @@
         </div>
     </header>
     <main class="login-hero">
+        <div class="alerta_erro">
+            <div class="card_erro" id="cardErro">
+                <span id="mensagem_erro"></span>
+            </div>
+        </div>
+        <div id="div_aguardar" style="display: none;">
+            Carregando...
+        </div>
+        <div id="div_erros_login" style="display: none;"></div>
         <div class="login-over"></div>
         <div class="login-content">
             <div class="login-left">
@@ -49,7 +58,7 @@
                         <label>Senha</label>
                         <input type="password" id="senha_input" placeholder="Insira sua senha" required>
                         <a href="#" class="forgot-password">Esqueceu sua senha?</a>
-                        <button type="submit" class="btn-primary">ENTRAR</button>
+                        <button type="button" class="btn-primary" onclick="entrar()">ENTRAR</button>
                     </form>
                     <span class="redirect">Ainda não possui conta?<a href="./register.html"> Registre-se </a></span>
                 </div>

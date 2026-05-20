@@ -26,6 +26,11 @@
         </div>
     </header>
     <main class="register-hero">
+        <div class="alerta_erro">
+            <div class="card_erro" id="cardErro">
+                <span id="mensagem_erro"></span>
+            </div>
+        </div>
         <div class="register-over"></div>
         <div class="register-content">
             <div class="register-left">
@@ -52,7 +57,7 @@
                         <label for="confirmacao_senha_input">Confirmar Senha:</label>
                         <input type="password" id="confirmacao_senha_input" name="confipassword" placeholder="Confirme a senha" class="insert" required>
 
-                        <button type="submit" class="btn-primary">CADASTRAR</button>
+                        <button type="button" class="btn-primary" onclick="cadastrar()">CADASTRAR</button>
                     </form>
                     <span class="redirect">Já possui conta? <a href="./login.html">Entrar</a></span>
                 </div>
