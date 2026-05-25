@@ -1,0 +1,177 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f6f5;
+    color: #333;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.btn-secondary {
+    border: 2px solid #2f7d3d;
+    color: #2f7d3d;
+}
+
+.btn-primary {
+    background-color: #2f7d3d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #2f7d3d;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #256632;
+}
+
+.hero {
+    width: 100%;
+    min-height: 100vh;
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 60px;
+    background-image: linear-gradient(
+        rgba(255,255,255,0.77),
+        rgba(255,255,255,0.77)
+    ),
+    url("../img/silo.png");
+
+    background-size: cover;
+    background-position: center;
+    padding: 120px 8% 0 8%;
+}
+
+.hero-text {
+    width: 50%;
+}
+
+.hero-text h1 {
+    font-size: 64px;
+    line-height: 1.1;
+    color: #2f7d3d;
+    margin-bottom: 25px;
+}
+
+.hero-text p {
+    font-size: 22px;
+    line-height: 1.7;
+    color: #555;
+    margin-bottom: 35px;
+    font-weight: 500;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 18px;
+}
+
+.hero-image {
+    width: 40%;
+
+    display: flex;
+    justify-content: center;
+}
+
+.section {
+    width: 85%;
+    margin: 80px auto;
+    padding: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 50px;
+
+    background-color: white;
+    border-radius: 20px;
+}
+
+.reverse {
+    flex-direction: row-reverse;
+}
+
+.section-text {
+    width: 50%;
+}
+
+.section-text h2 {
+    font-size: 42px;
+
+    color: #2f7d3d;
+
+    margin-bottom: 25px;
+}
+
+.section-text p {
+    font-size: 20px;
+    line-height: 1.8;
+
+    color: #555;
+
+    margin-bottom: 18px;
+}
+
+.section-image {
+    width: 45%;
+}
+
+.section-image img {
+    width: 100%;
+    height: 350px;
+
+    border-radius: 18px;
+
+    object-fit: cover;
+}
+
+@media (max-width: 900px) {
+
+    .hero,
+    .section,
+    .reverse {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-text,
+    .hero-image,
+    .section-text,
+    .section-image {
+        width: 100%;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .hero-text h1 {
+        font-size: 44px;
+    }
+
+    .hero-text p,
+    .section-text p {
+        font-size: 18px;
+    }
+
+    .section-text h2 {
+        font-size: 36px;
+    }
+}
