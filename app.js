@@ -12,14 +12,20 @@ var cors = require("cors");
 var path = require("path");
 var PORTA_APP = process.env.APP_PORT;
 var HOST_APP = process.env.APP_HOST;
+var { GoogleGenAI } = require("@google/genai");
+
 
 var app = express();
+
+var chatIA = new GoogleGenAI({ apiKey: process.env.MINHA_CHAVE });
+
 
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var avisosRouter = require("./src/routes/avisos");
 var medidasRouter = require("./src/routes/medidas");
 var dashboardRouter = require("./src/routes/dashboard");
+var bobRouter = require("./src/routes/bob");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -32,6 +38,7 @@ app.use("/usuarios", usuarioRouter);
 app.use("/avisos", avisosRouter);
 app.use("/medidas", medidasRouter);
 app.use("/dashboard", dashboardRouter);
+app.use("/bob", bobRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`
