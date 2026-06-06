@@ -21,6 +21,32 @@ function cadastrar() {
             "(Mensagem de erro para todos os campos em branco)";
         finalizarAguardar();
         return false;
+    } else if (!(emailVar.includes('@') && emailVar.includes('.'))) {
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML =
+            "O E-mail deve conter '@' e '.'";
+        finalizarAguardar();
+        return false;
+    } else if (senhaVar.length <= 8 ||
+        !(senhaVar.includes('@') || 
+            senhaVar.includes('!') ||
+            senhaVar.includes('#') ||
+            senhaVar.includes('%') ||
+            senhaVar.includes('&') ||
+            senhaVar.includes('*'))
+        ) {
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML =
+            "A senha deve conter pelo menos 8 caracteres e pelo menos 1 caractere especial!";
+        finalizarAguardar();
+        return false;
+    } else if (senhaVar != confirmacaoSenhaVar) {
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML =
+            "As senhas devem ser iguais";
+
+        finalizarAguardar();
+        return false;
     }
 
     fetch("/usuarios/cadastrar", {
