@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div class="bottom-menu">
-                <span class="user-name">Claudio Frizzarini</span>
+                <span class="user-name" id="div_username">usuario</span>
                 <button id="limparSessao" class="limparSessao" onclick="limparSessao()">Sair</button>
             </div>
         </div>
@@ -50,7 +50,7 @@
     <main>
         <div class="content">
             <div class="message">
-                <span class="span_message">Olá Claudio Frizzarini!</span>
+                <span class="span_message" id="div_bemVindo">Olá usuario!</span>
                 <span class="span_message">Visão Geral</span>
             </div>
             <div class="charts">
@@ -118,6 +118,11 @@
     
     <script src="./assets/js/dash.js"></script>
     <script src="../assets/js/sessao.js"></script>
-    <script>validarSessao()</script>
+    <script>
+        validarSessao()
+
+        div_username.innerHTML = sessionStorage.NOME_USUARIO
+        div_bemVindo.innerHTML = `Bem vindo(a) ${sessionStorage.NOME_USUARIO}!`
+    </script>
 </body>
 </html>

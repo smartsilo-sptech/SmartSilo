@@ -42,14 +42,14 @@
             </div>
         </div>
         <div class="bottom-menu">
-            <span class="user-name">Claudio Frizzarini</span>
+            <span class="user-name" id="div_username">usuario</span>
         </div>
     </div>
 </menu>
 <main>
     <div class="content">
         <div class="message">
-            <span class="span-message">Olá Claudio Frizzarini!</span>
+            <span class="span-message" id="div_bemVindo">Olá usuario!</span>
             <span class="span-message">Histórico de Alertas</span>
         </div>
         <div class="description">
@@ -168,4 +168,7 @@
 
 <script>
     validarSessao()
+
+    div_username.innerHTML = sessionStorage.NOME_USUARIO
+    div_bemVindo.innerHTML = `Bem vindo(a) ${sessionStorage.NOME_USUARIO}!`
 </script>

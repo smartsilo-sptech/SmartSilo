@@ -1,3 +1,6 @@
+document.getElementById('divUsername').innerHTML = sessionStorage.NOME_USUARIO
+document.getElementById('divWelcome').innerHTML = `Olá ${sessionStorage.NOME_USUARIO}!`
+
 var silosData = [
     { id: 1,  nome: 'Silo 1',  ocupacao: 75, historico: [75, 77, 79, 7, 23, 45, 62, 81, 78, 75] },
     { id: 2,  nome: 'Silo 2',  ocupacao: 45, historico: [50, 51, 52, 22, 18, 34, 56, 77, 60, 45] },
