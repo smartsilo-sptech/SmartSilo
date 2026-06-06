@@ -1,47 +1,69 @@
-var medidaModel = require("../models/medidaModel");
+var dashboardModel = require("../models/dashboardModel");
 
-function buscarUltimasMedidas(req, res) {
+function buscarVisaoGeral(req, res) {
 
-    const limite_linhas = 7;
+    dashboardModel.buscarVisaoGeral()
 
-    var idAquario = req.params.idAquario;
+    .then(function(resultado){
 
-    console.log(`Recuperando as ultimas ${limite_linhas} medidas`);
+        res.status(200).json(resultado);
 
-    medidaModel.buscarUltimasMedidas(idAquario, limite_linhas).then(function (resultado) {
-        if (resultado.length > 0) {
-            res.status(200).json(resultado);
-        } else {
-            res.status(204).send("Nenhum resultado encontrado!")
-        }
-    }).catch(function (erro) {
+    })
+
+    .catch(function(erro){
+
         console.log(erro);
-        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
-        res.status(500).json(erro.sqlMessage);
+
+        res.status(500).json(erro);
+
     });
+
 }
 
+function buscarPanoramica(req, res) {
 
-function buscarMedidasEmTempoReal(req, res) {
+    dashboardModel.buscarPanoramica()
 
-    var idAquario = req.params.idAquario;
+    .then(function(resultado){
 
-    console.log(`Recuperando medidas em tempo real`);
+        res.status(200).json(resultado);
 
-    medidaModel.buscarMedidasEmTempoReal(idAquario).then(function (resultado) {
-        if (resultado.length > 0) {
-            res.status(200).json(resultado);
-        } else {
-            res.status(204).send("Nenhum resultado encontrado!")
-        }
-    }).catch(function (erro) {
+    })
+
+    .catch(function(erro){
+
         console.log(erro);
-        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
-        res.status(500).json(erro.sqlMessage);
+
+        res.status(500).json(erro);
+
     });
+
+}
+
+function buscarAlertas(req, res) {
+
+    dashboardModel.buscarAlertas()
+
+    .then(function(resultado){
+
+        res.status(200).json(resultado);
+
+    })
+
+    .catch(function(erro){
+
+        console.log(erro);
+
+        res.status(500).json(erro);
+
+    });
+
 }
 
 module.exports = {
-    buscarUltimasMedidas,
-    buscarMedidasEmTempoReal
-}
+
+    buscarVisaoGeral,
+    buscarPanoramica,
+    buscarAlertas
+
+};
