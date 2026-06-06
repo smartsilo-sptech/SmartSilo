@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="../assets/css/menu.css">
     <link rel="stylesheet" href="../assets/css/global.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="../assets/js/sessao.js"></script>
 </head>
 <body>
     <menu>
@@ -35,15 +34,16 @@
                             <span class="span-link">- Histórico de Alertas</span>
                         </a>
                     </div>
-                    <div>
-                <a href="/dashboard/bob.html">
-                    <span class="span-link">- Suporte do Bob</span>
-                </a>
-                </div>
+                    <div id="link">
+                        <a href="/dashboard/bob.html">
+                            <span class="span-link">- Suporte do Bob</span>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="bottom-menu">
                 <span class="user-name">Claudio Frizzarini</span>
+                <button id="limparSessao" class="limparSessao" onclick="limparSessao()">Sair</button>
             </div>
         </div>
     </menu>
@@ -115,10 +115,9 @@
             </div>
         </div>
     </main>
-
-    <script>
-        validarSessao()
-    </script>
+    
     <script src="./assets/js/dash.js"></script>
+    <script src="../assets/js/sessao.js"></script>
+    <script>validarSessao()</script>
 </body>
 </html>
