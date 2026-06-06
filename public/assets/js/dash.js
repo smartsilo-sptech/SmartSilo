@@ -1,7 +1,3 @@
-if (!(sessionStorage.EMAIL_USUARIO)) {
-    window.location = "login.html"
-}
-
 var tempoReal = new Chart(document.getElementById('barras_tempo_real').getContext('2d'), {
     type: 'bar',
     data: {
