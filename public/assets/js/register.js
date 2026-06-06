@@ -15,6 +15,7 @@ function cadastrar() {
         confirmacaoSenhaVar == "" ||
         codigoVar == ""
     ) {
+        cardSucesso.style.display = 'none';
         cardErro.style.display = "block";
         mensagem_erro.innerHTML =
             "(Mensagem de erro para todos os campos em branco)";
@@ -36,13 +37,13 @@ function cadastrar() {
     })
         .then(function (resposta) {
             if (resposta.ok) {
-                cardErro.style.display = "block";
-                mensagem_erro.innerHTML =
+                cardErro.style.display = 'none';
+                cardSucesso.style.display = "block";
+                cardSucesso.innerHTML =
                     "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
                 setTimeout(() => {
                     window.location = "./login.html";
                 }, 2000);
-                limparFormulario();
                 finalizarAguardar();
                 return;
             }
@@ -52,6 +53,7 @@ function cadastrar() {
         })
         .catch(function (erro) {
             console.log(`#ERRO: ${erro}`);
+            cardSucesso.style.display = 'none';
             cardErro.style.display = "block";
             mensagem_erro.innerHTML = erro;
             finalizarAguardar();
@@ -61,4 +63,5 @@ function cadastrar() {
 
 function sumirMensagem() {
     cardErro.style.display = "none";
+    cardSucesso.style.display = 'none';
 }
