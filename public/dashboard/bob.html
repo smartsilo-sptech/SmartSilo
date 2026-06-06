@@ -4,11 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BobIA</title>
+    <link rel="stylesheet" href="../assets/css/menu.css">
     <link rel="stylesheet" href="../assets/css/bob.css">
+    <link rel="stylesheet" href="../assets/css/global.css">
 </head>
 <body>
-
-    <div id="container">
+<menu>
+    <div class="menu-content">
+        <div class="top-menu">
+            <div class="menu-message">
+                <a href="../index.html">
+                    <span class="menu-title">Dashboard<br>SmartSilo</span>
+                </a>            
+            </div>
+            <div class="menu-navigation">
+                <div id="link">
+                    <a href="./dash-visao-geral.html">
+                        <span class="span-link">- Visão Geral</span>
+                    </a>
+                </div>
+                <div id="link">
+                    <a href="./dash-panoramica.html">
+                        <span class="span-link">- Panorâmica</span>
+                    </a>
+                </div>
+                <div id="link">
+                    <a href="./dash-historico-alertas.html">
+                        <span class="span-link">- Histórico de Alertas</span>
+                    </a>
+                </div>
+                <div>
+                <a href="/dashboard/bob.html">
+                    <span class="span-link">- Suporte do Bob</span>
+                </a>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-menu">
+            <span class="user-name">Claudio Frizzarini</span>
+        </div>
+    </div>
+</menu>
+<main>
+    <div id="containerBob">
         <h1>BobIA</h1>
         <textarea id="pergunta" type="text" placeholder="Digite a pergunta..."></textarea>
         <br><br>
@@ -16,6 +54,7 @@
         <h3>Resposta da IA:</h3>
         <div id="resposta"></div>
     </div>
+</main>
 
     <script src="../assets/js/sessao.js"></script>
 
