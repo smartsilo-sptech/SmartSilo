@@ -1,11 +1,17 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: rgba(255,255,255,0.78);
-    margin: 0;
-    padding: 0;
+    display: flex;
+    margin: 0px;
+    background: #0eac50;
+    flex-direction: row;
+    overflow: hidden;
 }
 
-#container {
+main {
+    margin: 0px;
+    flex: 1;
+}
+
+#containerBob {
     width: 80%;
     margin: 50px auto;
     text-align: center;
