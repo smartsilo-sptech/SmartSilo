@@ -23,7 +23,7 @@ function carregarKPIs() {
 
         });
 
-    fetch("/dashboard/monitoramento")
+    fetch("/dashboard/monitoramento-silos")
         .then(res => res.json())
         .then(dados => {
 
