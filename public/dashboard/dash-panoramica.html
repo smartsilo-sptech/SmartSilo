@@ -1,71 +1,106 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panorâmica - Dashboard</title>
+
     <link rel="stylesheet" href="../assets/css/menu.css">
     <link rel="stylesheet" href="../assets/css/panoramica.css">
     <link rel="stylesheet" href="../assets/css/global.css">
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../assets/js/sessao.js"></script>
 </head>
+
 <body>
+
     <menu>
         <div class="menu-content">
+
             <div class="top-menu">
+
                 <div class="menu-message">
                     <a href="../index.html">
-                        <span class="menu-title">Dashboard<br>SmartSilo</span>
+                        <span class="menu-title">
+                            Dashboard<br>SmartSilo
+                        </span>
                     </a>
                 </div>
+
                 <div class="menu-navigation">
+
                     <div id="link">
                         <a href="./dash-visao-geral.html">
                             <span class="span-link">- Visão Geral</span>
                         </a>
                     </div>
+
                     <div id="link">
                         <a href="./dash-panoramica.html">
                             <span class="span-link">- Panorâmica</span>
                         </a>
                     </div>
+
                     <div id="link">
                         <a href="./dash-historico-alertas.html">
                             <span class="span-link">- Histórico de Alertas</span>
                         </a>
                     </div>
-                    <div>
-                <a href="/dashboard/bob.html">
-                    <span class="span-link">- Suporte do Bob</span>
-                </a>
+
+                    <div id="link">
+                        <a href="/dashboard/bob.html">
+                            <span class="span-link">- Suporte do Bob</span>
+                        </a>
+                    </div>
+
                 </div>
-                </div>
+
             </div>
+
             <div class="bottom-menu">
-                <span class="user-name" id="div_username">usuario</span>
-                <button id="limparSessao" class="limparSessao" onclick="limparSessao()">SAIR</button>
+                <span class="user-name" id="div_username">
+                    usuário
+                </span>
             </div>
+
         </div>
     </menu>
+
     <main>
+
         <div class="content">
+
             <div class="message">
-                <span class="span_message" id="div_bemVindo">Olá usuario!</span>
-                <span class="span_message">Panorâmica dos Silos</span>
+                <span class="span_message" id="div_bemVindo">
+                    Olá usuário!
+                </span>
+
+                <span class="span_message">
+                    Panorâmica dos Silos
+                </span>
             </div>
 
             <div class="grid-silos" id="grid-silos">
             </div>
+
         </div>
+
     </main>
 
     <script>
-        validarSessao()
-        
-        div_username.innerHTML = sessionStorage.NOME_USUARIO
-        div_bemVindo.innerHTML = `Bem vindo(a) ${sessionStorage.NOME_USUARIO}!`
+        validarSessao();
+
+        div_username.innerHTML =
+            sessionStorage.NOME_USUARIO.toUpperCase();
+
+        div_bemVindo.innerHTML =
+            `Bem vindo(a) ${sessionStorage.NOME_USUARIO}!`;
     </script>
+
     <script src="../assets/js/panoramica.js"></script>
+
 </body>
+
 </html>
