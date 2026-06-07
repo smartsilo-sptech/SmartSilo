@@ -58,15 +58,15 @@
                     <div class="left_charts_up">
                         <div class="total_silos">
                             <span class="title-kpi">Total de Silos: </span>
-                            <span class="data-kpi-qtdsilos">10</span>
+                            <span class="data-kpi-qtdsilos" id="kpiTotalSilos">0</span>
                         </div>
                         <div class="alertas_ativos">
                             <span class="title-kpi">Número de alertas ativos: </span>
-                            <span class="data-kpi-alertas">6</span>
+                            <span class="data-kpi-alertas" id="kpiAlertas">0</span>
                         </div>
                         <div class="status_geral">
                             <span class="title-kpi">Status da Distribuição: </span>
-                            <span class="data-kpi-status">RUIM</span>
+                            <span class="data-kpi-status" id="kpiStatus">-</span>
                         </div>
                     </div>
                     <div class="left_charts_down">
@@ -100,17 +100,7 @@
                 <div class="message">
                     <span class="span_message">Grid de Ocupação:</span>
                 </div>
-                <div class="silos">
-                    <div class="box-silo-red"><div class="internal-box-red"><span class="title-box">Silo 1: Crítico</span></div></div>
-                    <div class="box-silo-green"><div class="internal-box-green"><span class="title-box">Silo 2: Normal</span></div></div>
-                    <div class="box-silo-yellow"><div class="internal-box-yellow"><span class="title-box">Silo 3: Alerta</span></div></div>
-                    <div class="box-silo-green"><div class="internal-box-green"><span class="title-box">Silo 4: Normal</span></div></div>
-                    <div class="box-silo-green"><div class="internal-box-green"><span class="title-box">Silo 5: Normal</span></div></div>
-                    <div class="box-silo-red"><div class="internal-box-red"><span class="title-box">Silo 6: Crítico</span></div></div>
-                    <div class="box-silo-yellow"><div class="internal-box-yellow"><span class="title-box">Silo 7: Alerta</span></div></div>
-                    <div class="box-silo-yellow"><div class="internal-box-yellow"><span class="title-box">Silo 8: Alerta</span></div></div>
-                    <div class="box-silo-yellow"><div class="internal-box-yellow"><span class="title-box">Silo 9: Alerta</span></div></div>
-                    <div class="box-silo-green"><div class="internal-box-green"><span class="title-box">Silo 10: Normal</span></div></div>
+                <div class="silos" id="gridSilos">
                 </div>
             </div>
         </div>
