@@ -1,28 +1,8 @@
 var dashboardModel = require("../models/dashboardModel");
 
-function buscarVisaoGeral(req, res) {
+function buscarResumoFazenda(req, res) {
 
-    dashboardModel.buscarVisaoGeral()
-
-    .then(function(resultado){
-
-        res.status(200).json(resultado);
-
-    })
-
-    .catch(function(erro){
-
-        console.log(erro);
-
-        res.status(500).json(erro);
-
-    });
-
-}
-
-function buscarPanoramica(req, res) {
-
-    dashboardModel.buscarPanoramica()
+    dashboardModel.buscarResumoFazenda()
 
     .then(function(resultado){
 
@@ -40,9 +20,49 @@ function buscarPanoramica(req, res) {
 
 }
 
-function buscarAlertas(req, res) {
+function buscarMonitoramentoSilos(req, res) {
 
-    dashboardModel.buscarAlertas()
+    dashboardModel.buscarMonitoramentoSilos()
+
+    .then(function(resultado){
+
+        res.status(200).json(resultado);
+
+    })
+
+    .catch(function(erro){
+
+        console.log(erro);
+
+        res.status(500).json(erro);
+
+    });
+
+}
+
+function buscarUltimaLeituraSilos(req, res) {
+
+    dashboardModel.buscarUltimaLeituraSilos()
+
+    .then(function(resultado){
+
+        res.status(200).json(resultado);
+
+    })
+
+    .catch(function(erro){
+
+        console.log(erro);
+
+        res.status(500).json(erro);
+
+    });
+
+}
+
+function buscarAlertasRecentes(req, res) {
+
+    dashboardModel.buscarAlertasRecentes()
 
     .then(function(resultado){
 
@@ -62,8 +82,9 @@ function buscarAlertas(req, res) {
 
 module.exports = {
 
-    buscarVisaoGeral,
-    buscarPanoramica,
-    buscarAlertas
+    buscarResumoFazenda,
+    buscarMonitoramentoSilos,
+    buscarUltimaLeituraSilos,
+    buscarAlertasRecentes
 
 };
