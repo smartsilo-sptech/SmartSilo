@@ -80,11 +80,53 @@ function buscarAlertasRecentes(req, res) {
 
 }
 
+function buscarSiloMaisCritico(req, res) {
+
+    dashboardModel.buscarSiloMaisCritico()
+
+    .then(function(resultado){
+
+        res.status(200).json(resultado);
+
+    })
+
+    .catch(function(erro){
+
+        console.log(erro);
+
+        res.status(500).json(erro);
+
+    });
+
+}
+
+function buscarPrevisaoEnchimento(req, res) {
+
+    dashboardModel.buscarPrevisaoEnchimento()
+
+    .then(function(resultado){
+
+        res.status(200).json(resultado);
+
+    })
+
+    .catch(function(erro){
+
+        console.log(erro);
+
+        res.status(500).json(erro);
+
+    });
+
+}
+
 module.exports = {
 
     buscarResumoFazenda,
     buscarMonitoramentoSilos,
     buscarUltimaLeituraSilos,
-    buscarAlertasRecentes
+    buscarAlertasRecentes,
+    buscarSiloMaisCritico,
+    buscarPrevisaoEnchimento
 
 };
