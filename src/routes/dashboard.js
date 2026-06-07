@@ -11,7 +11,7 @@ router.get("/monitoramento-silos", function(req, res) {
     dashboardController.buscarMonitoramentoSilos(req, res);
 });
 
-router.get("/ultima-leitura-silos", function(req, res) {
+router.get("/ultima-leitura", function(req, res) {
     dashboardController.buscarUltimaLeituraSilos(req, res);
 });
 
