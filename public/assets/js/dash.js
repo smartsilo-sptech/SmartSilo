@@ -1,222 +1,192 @@
-var tempoReal = new Chart(document.getElementById('barras_tempo_real').getContext('2d'), {
-    type: 'bar',
-    data: {
-    labels: ['Silo 1', 'Silo 2', 'Silo 3', 'Silo 4', 'Silo 5', 'Silo 6', 'Silo 7', 'Silo 8', 'Silo 9', 'Silo 10'],
-    datasets: [{
-        label: 'Ocupação dos Silos em Tempo Real',
-        data: [75, 45, 67, 53, 56, 26, 71, 65, 40, 49],
-        backgroundColor: function(context) {
-            const data = context.dataset.data;
-            let totalOcupacao = 0;
-            for (let i = 0; i < data.length; i++) {
-                totalOcupacao += data[i];
-            }
-            const ocupacao = data[context.dataIndex];
-            const percentual = (ocupacao / totalOcupacao) * 100;
+document.getElementById('div_username').innerHTML = sessionStorage.NOME_USUARIO;
+document.getElementById('div_bemVindo').innerHTML =
+    `Bem vindo(a) ${sessionStorage.NOME_USUARIO}!`;
 
-            if (percentual <= 6) {
-                return '#AB0F0F';
-            } else if (percentual <= 8) {
-                return '#FFCD04';
-            } else if (percentual <= 11) {
-                return '#0eac50';
-            } else if (percentual <= 13) {
-                return '#FFCD04';
-            } else {
-                return '#AB0F0F';
-            }
-        }
-    }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false
-            }
-        },
-        scales: {
-            x: {
-                title: {
-                    display: true,
-                    text: 'Silos'
-                },
-                beginAtZero: true,
-            },
-            y: {
-                title: {
-                    display: true,
-                    text: 'Porcentagem de Ocupação (%)'
-                },
-                beginAtZero: true
-            }
-        }
-    }
-});
+let graficoBarras;
+let graficoLinhas;
 
-var alertaCritico = new Chart(document.getElementById('linhas_alerta').getContext('2d'), {
-    type: 'line',
-    data: {
-    labels: ['11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'],
-    datasets: [{
-        label: 'Silo 1',
-        data: [7, 23, 45, 62, 81, 78, 75],
-        hidden: false,
-        backgroundColor: ['rgb(167, 0, 0)'],
-        borderColor: ['rgb(167, 0, 0)']
-    }, {
-        label: 'Silo 2',
-        data: [22, 18, 34, 56, 77, 60, 45],
-        hidden: true,
-        backgroundColor: ['#189D50'],
-        borderColor: ['#189D50']
-    }, {
-        label: 'Silo 3',
-        data: [12, 29, 41, 68, 84, 73, 67],
-        hidden: true,
-        backgroundColor: ['#FFCD04'],
-        borderColor: ['#FFCD04']
-    }, {
-        label: 'Silo 4',
-        data: [2, 17, 28, 46, 72, 60, 53],
-        hidden: true,
-        backgroundColor: ['#189D50'],
-        borderColor: ['#189D50']
-    }, {
-        label: 'Silo 5',
-        data: [9, 14, 35, 51, 68, 60, 56],
-        hidden: true,
-        backgroundColor: ['#189D50'],
-        borderColor: ['#189D50']
-    }, {
-        label: 'Silo 6',
-        data: [25, 22, 39, 57, 40, 40, 26],
-        hidden: true,
-        backgroundColor: ['rgb(167, 0, 0)'],
-        borderColor: ['rgb(167, 0, 0)']
-    }, {
-        label: 'Silo 7',
-        data: [14, 26, 44, 63, 81, 100, 71],
-        hidden: true,
-        backgroundColor: ['#FFCD04'],
-        borderColor: ['#FFCD04']
-    }, {
-        label: 'Silo 8',
-        data: [12, 19, 31, 54, 77, 67, 65],
-        hidden: true,
-        backgroundColor: ['#FFCD04'],
-        borderColor: ['#FFCD04']
-    }, {
-        label: 'Silo 9',
-        data: [67, 24, 38, 59, 50, 42, 40],
-        hidden: true,
-        backgroundColor: ['#FFCD04'],
-        borderColor: ['#FFCD04']
-    }, {
-        label: 'Silo 10',
-        data: [30, 21, 47, 66, 79, 53, 49],
-        hidden: true,
-        backgroundColor: ['#189D50'],
-        borderColor: ['#189D50']
-    }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            y: {
-                title: {
-                    display: true,
-                    text: 'Porcentagem de Ocupação (%)'
-                },
-                beginAtZero: true
-            },
-            x: {
-                title: {
-                    display: true,
-                    text: 'Horas'
-                },
-                beginAtZero: false
-            }
-        }
-    }
-});
+window.onload = function () {
+    carregarKPIs();
+    carregarGraficoBarras();
+    carregarGraficoLinhas();
+    carregarGridSilos();
+};
 
-if (false) {
-    var paginacao = {};
-    var tempo = {};
-    
-    function obterDados(grafico, endpoint) {
-        fetch('http://localhost:3300/sensores/' + endpoint)
-            .then(response => response.json())
-            .then(valores => {
-                if (paginacao[endpoint] == null) {
-                    paginacao[endpoint] = 0;
+function carregarKPIs() {
+
+    fetch("/dashboard/resumo-fazenda")
+        .then(res => res.json())
+        .then(dados => {
+
+            document.querySelector(".data-kpi-qtdsilos").innerHTML =
+                dados[0].totalSilos;
+
+        });
+
+    fetch("/dashboard/monitoramento")
+        .then(res => res.json())
+        .then(dados => {
+
+            const alertas =
+                Number(dados[0].silosCriticos) +
+                Number(dados[0].silosAlerta);
+
+            document.querySelector(".data-kpi-alertas").innerHTML =
+                alertas;
+
+            let status = "IDEAL";
+
+            if (dados[0].silosCriticos > 0) {
+                status = "CRÍTICO";
+            } else if (dados[0].silosAlerta > 0) {
+                status = "ALERTA";
+            }
+
+            document.querySelector(".data-kpi-status").innerHTML =
+                status;
+        });
+}
+
+function carregarGraficoBarras() {
+
+    fetch("/dashboard/ultima-leitura")
+        .then(res => res.json())
+        .then(dados => {
+
+            let labels = [];
+            let valores = [];
+            let cores = [];
+
+            for (let i = 0; i < dados.length; i++) {
+
+                labels.push(dados[i].nomeSilo);
+                valores.push(dados[i].percentual_ocupacao);
+
+                const ocupacao = dados[i].percentual_ocupacao;
+
+                if (ocupacao >= 90) {
+                    cores.push("#AB0F0F");
+                } else if (ocupacao >= 80) {
+                    cores.push("#FFCD04");
+                } else {
+                    cores.push("#0eac50");
                 }
-                if (tempo[endpoint] == null) {
-                    tempo[endpoint] = 0;
-                }
-                var ultimaPaginacao = paginacao[endpoint];
-                paginacao[endpoint] = valores.length;
-                valores = valores.slice(ultimaPaginacao);
-                valores.forEach((valor) => {
-                    if (grafico.data.labels.length == 10 && grafico.data.datasets[0].data.length == 10) {
-                        grafico.data.labels.shift();
-                        grafico.data.datasets[0].data.shift();
+            }
+
+            graficoBarras = new Chart(
+                document.getElementById("barras_tempo_real"),
+                {
+                    type: "bar",
+                    data: {
+                        labels,
+                        datasets: [{
+                            label: "Ocupação (%)",
+                            data: valores,
+                            backgroundColor: cores
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100
+                            }
+                        }
                     }
-                    grafico.data.labels.push(tempo[endpoint]++);
-                    grafico.data.datasets[0].data.push(parseFloat(valor));
-                    grafico.update();
-                });
-            })
-            .catch(error => console.error('Erro ao obter dados:', error));
-    }
-    
-    function obterDadosAlerta(grafico) {
-        fetch('http://localhost:3300/sensores/digital')
-            .then(response => response.json())
-            .then(percentuais => {
-                fetch('http://localhost:3300/sensores/status')
-                    .then(response => response.json())
-                    .then(statusValues => {
-                        if (paginacao['alerta'] == null) {
-                            paginacao['alerta'] = 0;
-                        }
-                        if (tempo['alerta'] == null) {
-                            tempo['alerta'] = 0;
-                        }
-                        var ultimaPaginacao = paginacao['alerta'];
-                        paginacao['alerta'] = percentuais.length;
-                        var i = ultimaPaginacao;
-                        while (i < percentuais.length) {
-                            var percentual = percentuais[i];
-                            var status = statusValues[i];
-                            i++;
-                            tempo['alerta']++;
-                            if (status == 0) {
-                                continue;
+                }
+            );
+        });
+}
+
+function carregarGraficoLinhas() {
+
+    fetch("/dashboard/ultima-leitura")
+        .then(res => res.json())
+        .then(dados => {
+
+            const labels = [];
+
+            for (let i = 0; i < dados.length; i++) {
+                labels.push(dados[i].nomeSilo);
+            }
+
+            graficoLinhas = new Chart(
+                document.getElementById("linhas_alerta"),
+                {
+                    type: "line",
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: "Ocupação Atual (%)",
+                            data: dados.map(item => item.percentual_ocupacao),
+                            borderColor: "#0eac50",
+                            backgroundColor: "#0eac50",
+                            tension: 0.3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100
                             }
-                            if (grafico.data.labels.length == 10 && grafico.data.datasets[0].data.length == 10) {
-                                grafico.data.labels.shift();
-                                grafico.data.datasets[0].data.shift();
-                            }
-                            grafico.data.labels.push(tempo['alerta']);
-                            grafico.data.datasets[0].data.push(parseFloat(percentual));
-                            if (status == 2) {
-                                grafico.data.datasets[0].borderColor = '#AB0F0F';
-                            } else {
-                                grafico.data.datasets[0].borderColor = '#FFCD04';
-                            }
-                            grafico.update();
                         }
-                    });
-            })
-            .catch(error => console.error('Erro ao obter dados:', error));
-    }
-    
-    setInterval(() => {
-        obterDados(tempoReal, 'digital');
-        obterDadosAlerta(alertaCritico);
-    }, 2000);
+                    }
+                }
+            );
+        });
+}
+
+function carregarGridSilos() {
+
+    fetch("/dashboard/ultima-leitura")
+        .then(res => res.json())
+        .then(dados => {
+
+            const container =
+                document.querySelector(".silos");
+
+            container.innerHTML = "";
+
+            for (let i = 0; i < dados.length; i++) {
+
+                const silo = dados[i];
+
+                let status = "Normal";
+                let classeExterna = "box-silo-green";
+                let classeInterna = "internal-box-green";
+
+                if (silo.percentual_ocupacao >= 90) {
+
+                    status = "Crítico";
+                    classeExterna = "box-silo-red";
+                    classeInterna = "internal-box-red";
+
+                } else if (silo.percentual_ocupacao >= 80) {
+
+                    status = "Alerta";
+                    classeExterna = "box-silo-yellow";
+                    classeInterna = "internal-box-yellow";
+                }
+
+                container.innerHTML += `
+                    <div class="${classeExterna}">
+                        <div class="${classeInterna}">
+                            <span class="title-box">
+                                ${silo.nomeSilo}: ${status}
+                            </span>
+                        </div>
+                    </div>
+                `;
+            }
+        });
 }
