@@ -41,7 +41,8 @@
             </div>
         </div>
         <div class="bottom-menu">
-            <span class="user-name">Claudio Frizzarini</span>
+            <span class="user-name" id="div_username">usuario</span>
+            <button id="limparSessao" class="limparSessao" onclick="limparSessao()">SAIR</button>
         </div>
     </div>
 </menu>
@@ -55,12 +56,13 @@
         <div id="resposta"></div>
     </div>
 </main>
-
     <script src="../assets/js/sessao.js"></script>
 
     <script>
-        
         validarSessao()
+
+        div_username.innerHTML = sessionStorage.NOME_USUARIO
+        div_bemVindo.innerHTML = `Bem vindo(a) ${sessionStorage.NOME_USUARIO}!`
 
         async function gerarResposta() {
             const pergunta = document.getElementById('pergunta').value;
@@ -80,6 +82,5 @@
         }
 
     </script>
-    
 </body>
 </html>

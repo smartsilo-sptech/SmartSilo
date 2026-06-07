@@ -43,7 +43,7 @@
             </div>
             <div class="bottom-menu">
                 <span class="user-name" id="div_username">usuario</span>
-                <button id="limparSessao" class="limparSessao" onclick="limparSessao()">Sair</button>
+                <button id="limparSessao" class="limparSessao" onclick="limparSessao()">SAIR</button>
             </div>
         </div>
     </menu>
@@ -111,7 +111,7 @@
     <script>
         validarSessao()
 
-        div_username.innerHTML = sessionStorage.NOME_USUARIO
+        div_username.innerHTML = sessionStorage.NOME_USUARIO.toUpperCase();
         div_bemVindo.innerHTML = `Bem vindo(a) ${sessionStorage.NOME_USUARIO}!`
     </script>
 </body>
