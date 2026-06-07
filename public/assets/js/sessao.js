@@ -12,6 +12,21 @@ function validarSessao() {
     }
 }
 
+function validarSessaoIndex() {
+    var email = sessionStorage.EMAIL_USUARIO;
+    var nome = sessionStorage.NOME_USUARIO;
+
+    if (email != null && nome != null) {
+        document.getElementById('btn-register').style.display = 'none';
+        document.getElementById('btn-login').innerHTML = 'Dashboard';
+        document.getElementById('btn-login').href = "./dashboard/dash-visao-geral.html";
+
+        document.getElementById('hero-buttons').innerHTML = `
+            <a href="./dashboard/dash-visao-geral.html" class="btn-primary">Dashboard</a>
+        `;
+    }
+}
+
 function limparSessao() {
     sessionStorage.clear();
     window.location = "../login.html";

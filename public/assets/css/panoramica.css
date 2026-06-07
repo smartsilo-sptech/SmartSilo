@@ -3,7 +3,7 @@ body {
     margin: 0px;
     background: #0eac50;
     flex-direction: row;
-    overflow: scroll;
+    overflow: hidden;
 }
 
 main {
@@ -105,4 +105,31 @@ main {
     position: relative;
     width: 100%;
     height: 100%;
+}
+
+#div_username {
+    font-size: larger;
+    font-weight: bold;
+}
+
+.limparSessao {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #189D50;
+    
+    color: white;
+    font-weight: bold;
+
+    border: 1px solid #0eac50;
+    border-radius: 5px;
+
+    height: 7%;
+    width: 70%;
+}
+
+.limparSessao:hover {
+    background-color: #0e4209;
+    border: 1px solid #0e4209;
 }
