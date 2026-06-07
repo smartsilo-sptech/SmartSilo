@@ -19,4 +19,12 @@ router.get("/alertas-recentes", function(req, res) {
     dashboardController.buscarAlertasRecentes(req, res);
 });
 
+router.get("/silo-mais-critico", function(req, res) {
+    dashboardController.buscarSiloMaisCritico(req, res);
+});
+
+router.get("/previsao-enchimento", function(req, res) {
+    dashboardController.buscarPrevisaoEnchimento(req, res);
+});
+
 module.exports = router;
