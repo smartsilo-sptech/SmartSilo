@@ -32,9 +32,42 @@ function buscarAlertasRecentes() {
     return database.executar(instrucaoSql);
 }
 
+function buscarSiloMaisCritico() {
+
+    var instrucaoSql = `
+        SELECT
+            nomeSilo,
+            percentual_ocupacao
+        FROM vw_ultima_leitura_silo
+        ORDER BY percentual_ocupacao DESC
+        LIMIT 1;
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function buscarPrevisaoEnchimento() {
+
+    var instrucaoSql = `
+        SELECT
+            nomeSilo,
+            percentual_ocupacao,
+            ROUND((100 - percentual_ocupacao) / 2, 0) AS diasPrevisao
+        FROM vw_ultima_leitura_silo
+        ORDER BY percentual_ocupacao DESC
+        LIMIT 1;
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     buscarResumoFazenda,
     buscarMonitoramentoSilos,
     buscarUltimaLeituraSilos,
-    buscarAlertasRecentes
+    buscarAlertasRecentes,
+    buscarSiloMaisCritico,
+    buscarPrevisaoEnchimento
 }
