@@ -3,16 +3,20 @@ var router = express.Router();
 
 var dashboardController = require("../controllers/dashboardController");
 
-router.get("/visao-geral", function(req, res) {
-    dashboardController.buscarVisaoGeral(req, res);
+router.get("/resumo-fazenda", function(req, res) {
+    dashboardController.buscarResumoFazenda(req, res);
 });
 
-router.get("/panoramica", function(req, res) {
-    dashboardController.buscarPanoramica(req, res);
+router.get("/monitoramento-silos", function(req, res) {
+    dashboardController.buscarMonitoramentoSilos(req, res);
 });
 
-router.get("/alertas", function(req, res) {
-    dashboardController.buscarAlertas(req, res);
+router.get("/ultima-leitura-silos", function(req, res) {
+    dashboardController.buscarUltimaLeituraSilos(req, res);
+});
+
+router.get("/alertas-recentes", function(req, res) {
+    dashboardController.buscarAlertasRecentes(req, res);
 });
 
 module.exports = router;
