@@ -1,28 +1,10 @@
-document.getElementById('div_username').innerHTML =
-    sessionStorage.NOME_USUARIO;
+document.getElementById("div_username").innerHTML =
+    sessionStorage.NOME_USUARIO.toUpperCase();
 
-document.getElementById('div_bemVindo').innerHTML =
+document.getElementById("div_bemVindo").innerHTML =
     `Bem vindo(a) ${sessionStorage.NOME_USUARIO}!`;
 
-window.onload = carregarPanoramica;
-
-function carregarPanoramica() {
-
-    fetch("/dashboard/ultima-leitura")
-        .then(res => res.json())
-        .then(dados => {
-
-            renderizarSilos(dados);
-
-        })
-        .catch(erro => {
-
-            console.log(erro);
-
-        });
-}
-
-function getStatus(ocupacao) {
+function obterStatus(ocupacao) {
 
     if (ocupacao >= 90) {
         return "critico";
@@ -32,12 +14,12 @@ function getStatus(ocupacao) {
         return "alerta";
     }
 
-    return "ideal";
+    return "normal";
 }
 
-function getCor(status) {
+function obterCor(status) {
 
-    if (status == "ideal") {
+    if (status == "normal") {
         return "#0eac50";
     }
 
@@ -48,9 +30,9 @@ function getCor(status) {
     return "#AB0F0F";
 }
 
-function getClasseOcupacao(status) {
+function obterClasse(status) {
 
-    if (status == "ideal") {
+    if (status == "normal") {
         return "info-ocupacao-verde";
     }
 
@@ -61,71 +43,114 @@ function getClasseOcupacao(status) {
     return "info-ocupacao-vermelho";
 }
 
-function renderizarSilos(listaSilos) {
+function carregarPanoramica() {
 
-    const grid = document.getElementById("grid-silos");
+    fetch("/dashboard/ultima-leitura")
+        .then(res => res.json())
+        .then(dados => {
 
-    grid.innerHTML = "";
+            const grid =
+                document.getElementById("grid-silos");
 
-    for (let i = 0; i < listaSilos.length; i++) {
+            grid.innerHTML = "";
 
-        const silo = listaSilos[i];
+            dados.forEach((silo, index) => {
 
-        const status =
-            getStatus(silo.percentual_ocupacao);
+                const status =
+                    obterStatus(silo.percentual_ocupacao);
 
-        const card = document.createElement("div");
+                const card =
+                    document.createElement("div");
 
-        card.className = "card-silo";
+                card.className = "card-silo";
 
-        card.innerHTML = `
-            <span class="card-titulo">
-                ${silo.nomeSilo}
-            </span>
+                card.innerHTML = `
+                    <span class="card-titulo">
+                        ${silo.nomeSilo}
+                    </span>
 
-            <div class="card-info">
-                <span class="${getClasseOcupacao(status)}">
-                    Ocupação:
-                    ${silo.percentual_ocupacao}%
-                </span>
-            </div>
+                    <div class="card-info">
 
-            <div class="card-chart-wrapper">
-                <canvas id="chart-silo-${silo.idSilos}"></canvas>
-            </div>
-        `;
+                        <span class="${obterClasse(status)}">
+                            Ocupação:
+                            ${silo.percentual_ocupacao}%
+                        </span>
 
-        grid.appendChild(card);
+                    </div>
 
-        const cor = getCor(status);
+                    <div class="card-chart-wrapper">
+                        <canvas id="grafico${index}">
+                        </canvas>
+                    </div>
+                `;
 
-        new Chart(
-            document.getElementById(`chart-silo-${silo.idSilos}`),
-            {
-                type: "doughnut",
-                data: {
-                    labels: ["Ocupado", "Livre"],
-                    datasets: [{
-                        data: [
-                            silo.percentual_ocupacao,
-                            100 - silo.percentual_ocupacao
-                        ],
-                        backgroundColor: [
-                            cor,
-                            "#E0E0E0"
-                        ]
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
+                grid.appendChild(card);
+
+                criarGrafico(
+                    index,
+                    silo.percentual_ocupacao,
+                    status
+                );
+            });
+
+        })
+        .catch(erro => {
+
+            console.error(
+                "Erro ao carregar panorâmica:",
+                erro
+            );
+
+        });
+}
+
+function criarGrafico(id, ocupacao, status) {
+
+    const cor = obterCor(status);
+
+    new Chart(
+        document.getElementById(`grafico${id}`),
+        {
+            type: "doughnut",
+
+            data: {
+                labels: [
+                    "Ocupado",
+                    "Disponível"
+                ],
+
+                datasets: [{
+                    data: [
+                        ocupacao,
+                        100 - ocupacao
+                    ],
+
+                    backgroundColor: [
+                        cor,
+                        "#e5e5e5"
+                    ]
+                }]
+            },
+
+            options: {
+
+                responsive: true,
+
+                plugins: {
+                    legend: {
+                        display: false
                     }
                 }
+
             }
-        );
-    }
+
+        }
+    );
 }
+
+carregarPanoramica();
+
+setInterval(
+    carregarPanoramica,
+    10000
+);
