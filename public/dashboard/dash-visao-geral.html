@@ -1,118 +1,260 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visão Geral - Dashboard</title>
+
     <link rel="stylesheet" href="../assets/css/visao-geral.css">
     <link rel="stylesheet" href="../assets/css/menu.css">
     <link rel="stylesheet" href="../assets/css/global.css">
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
+
     <menu>
         <div class="menu-content">
+
             <div class="top-menu">
+
                 <div class="menu-message">
                     <a href="../index.html">
-                        <span class="menu-title">Dashboard<br>SmartSilo</span>
+                        <span class="menu-title">
+                            Dashboard<br>SmartSilo
+                        </span>
                     </a>
                 </div>
+
                 <div class="menu-navigation">
+
                     <div id="link">
                         <a href="./dash-visao-geral.html">
                             <span class="span-link">- Visão Geral</span>
                         </a>
                     </div>
+
                     <div id="link">
                         <a href="./dash-panoramica.html">
                             <span class="span-link">- Panorâmica</span>
                         </a>
                     </div>
+
                     <div id="link">
                         <a href="./dash-historico-alertas.html">
                             <span class="span-link">- Histórico de Alertas</span>
                         </a>
                     </div>
+
                     <div id="link">
                         <a href="/dashboard/bob.html">
                             <span class="span-link">- Suporte do Bob</span>
                         </a>
                     </div>
+
                 </div>
+
             </div>
+
             <div class="bottom-menu">
-                <span class="user-name" id="div_username">usuario</span>
-                <button id="limparSessao" class="limparSessao" onclick="limparSessao()">SAIR</button>
+
+                <span class="user-name" id="div_username">
+                    usuario
+                </span>
+
+                <button
+                    id="limparSessao"
+                    class="limparSessao"
+                    onclick="limparSessao()">
+
+                    SAIR
+
+                </button>
+
             </div>
+
         </div>
     </menu>
-    <main>
-        <div class="content">
-            <div class="message">
-                <span class="span_message" id="div_bemVindo">Olá usuario!</span>
-                <span class="span_message">Visão Geral</span>
-            </div>
-            <div class="charts">
-                <div class="charts_left">
-                    <div class="left_charts_up">
-                        <div class="total_silos">
-                            <span class="title-kpi">Total de Silos: </span>
-                            <span class="data-kpi-qtdsilos" id="kpiTotalSilos">0</span>
-                        </div>
-                        <div class="alertas_ativos">
-                            <span class="title-kpi">Número de alertas ativos: </span>
-                            <span class="data-kpi-alertas" id="kpiAlertas">0</span>
-                        </div>
-                        <div class="status_geral">
-                            <span class="title-kpi">Status da Distribuição: </span>
-                            <span class="data-kpi-status" id="kpiStatus">-</span>
-                        </div>
-                    </div>
-                    <div class="left_charts_down">
-                        <div class="silos_tempo_real">
-                            <span class="charts-title">Ocupação dos Silos em Tempo Real</span>
-                            <canvas id="barras_tempo_real"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="charts_right">
-                    <div class="right_charts_up">
-                        <div class="silos_alerta">
-                            <span class="charts-title">Progressão da Ocupação de Cada Silo ao Longo das Horas<br><small>(clique em um silo para destacá-lo)</small></span>
-                            <canvas id="linhas_alerta"></canvas>
-                        </div>
-                    </div>
-                    <div class="right_charts_down">
-                        <div class="faixas">
-                            <span class="span_faixas">Faixas:</span>
-                            <span class="span_faixas"><small>Valor Ideal de 54%</small></span>
-                            <span class="faixa_critica">Muito Abaixo: 0% - 32%</span>
-                            <span class="faixa_alerta">Abaixo: 32% - 43%</span>
-                            <span class="faixa_ideal">Bem Distribuído: 43% - 60%</span>
-                            <span class="faixa_alerta">Acima: 60% - 71%</span>
-                            <span class="faixa_critica">Muito Acima: 71% - 100%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="status">
-                <div class="message">
-                    <span class="span_message">Grid de Ocupação:</span>
-                </div>
-                <div class="silos" id="gridSilos">
-                </div>
-            </div>
-        </div>
-    </main>
-    
-    <script src="../assets/js/dash.js"></script>
-    <script src="../assets/js/sessao.js"></script>
-    <script>
-        validarSessao()
 
-        div_username.innerHTML = sessionStorage.NOME_USUARIO.toUpperCase();
-        div_bemVindo.innerHTML = `Bem vindo(a) ${sessionStorage.NOME_USUARIO}!`
+    <main>
+
+        <div class="content">
+
+            <div class="message">
+
+                <span
+                    class="span_message"
+                    id="div_bemVindo">
+
+                    Olá usuário!
+
+                </span>
+
+                <span class="span_message">
+                    Visão Geral
+                </span>
+
+            </div>
+
+            <div class="charts">
+
+                <div class="charts_left">
+
+                    <div class="left_charts_up">
+
+                        <div class="total_silos">
+                            <span class="title-kpi">
+                                Total de Silos
+                            </span>
+
+                            <span
+                                class="data-kpi-qtdsilos"
+                                id="kpiTotalSilos">
+
+                                0
+
+                            </span>
+                        </div>
+
+                        <div class="alertas_ativos">
+                            <span class="title-kpi">
+                                Alertas Ativos
+                            </span>
+
+                            <span
+                                class="data-kpi-alertas"
+                                id="kpiAlertas">
+
+                                0
+
+                            </span>
+                        </div>
+
+                        <div class="status_geral">
+                            <span class="title-kpi">
+                                Ocupação Média da Fazenda
+                            </span>
+
+                            <span
+                                class="data-kpi-status"
+                                id="kpiOcupacaoMedia">
+
+                                0%
+
+                            </span>
+                        </div>
+
+                        <div class="status_geral">
+                            <span class="title-kpi">
+                                Silo Mais Crítico
+                            </span>
+
+                            <span
+                                class="data-kpi-status"
+                                id="kpiSiloCritico">
+
+                                -
+
+                            </span>
+                        </div>
+
+                        <div class="status_geral">
+                            <span class="title-kpi">
+                                Previsão de Enchimento
+                            </span>
+
+                            <span
+                                class="data-kpi-status"
+                                id="kpiPrevisao">
+
+                                -
+
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="left_charts_down">
+
+                        <div class="silos_tempo_real">
+
+                            <span class="charts-title">
+                                Ocupação dos Silos em Tempo Real
+                            </span>
+
+                            <canvas id="barras_tempo_real"></canvas>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="charts_right">
+
+                    <div class="right_charts_up">
+
+                        <div class="acoes-recomendadas">
+
+                            <span class="charts-title">
+                                Próximas Ações Recomendadas
+                            </span>
+
+                            <div id="acoesContainer">
+
+                                <p>
+                                    Carregando recomendações...
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="status">
+
+                <div class="message">
+
+                    <span class="span_message">
+                        Grid de Ocupação
+                    </span>
+
+                </div>
+
+                <div
+                    class="silos"
+                    id="gridSilos">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <script src="../assets/js/sessao.js"></script>
+    <script src="../assets/js/dash.js"></script>
+
+    <script>
+
+        validarSessao();
+
+        div_username.innerHTML =
+            sessionStorage.NOME_USUARIO.toUpperCase();
+
+        div_bemVindo.innerHTML =
+            `Bem vindo(a) ${sessionStorage.NOME_USUARIO}!`;
+
     </script>
+
 </body>
+
 </html>
