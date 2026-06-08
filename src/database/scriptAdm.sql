@@ -1,5 +1,4 @@
 CREATE DATABASE sistema_silos;
-
 USE sistema_silos;
 
 CREATE TABLE dono (
@@ -16,17 +15,17 @@ INSERT INTO dono (nome, email, senha, CPF, telefone) VALUES
 ('Claudio', 'claudio@sptech.school', 'senha123', 11122233344, 11912345678);
 
 CREATE TABLE empresa (
-idEmpresa INT PRIMARY KEY,
+idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
 nome VARCHAR(45) NOT NULL,
 cep CHAR(8) NOT NULL,
 telefone CHAR(11),
 cnpj CHAR(14) NOT NULL,
 fkDono INT,
 CONSTRAINT fk_dono_const FOREIGN KEY (fkDono) REFERENCES dono(idDono)
-);
+)AUTO_INCREMENT = 1000;
 
-INSERT INTO empresa (idEmpresa, nome, cep, cnpj, fkDono) VALUES
-(123456, 'Yoki', '06753404', '12345678912345', 1);
+INSERT INTO empresa (nome, cep, cnpj, fkDono) VALUES
+('Yoki', '06753404', '12345678912345', 1);
 
 CREATE TABLE funcionario (
 idFuncionario INT PRIMARY KEY AUTO_INCREMENT,
@@ -40,7 +39,7 @@ CONSTRAINT fk_empresa_const FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa
 );
 
 INSERT INTO funcionario (tipoFuncionario, nome, email, senha, fkEmpresa) VALUES
-('Gerente', 'Pedro Ablublé', 'pedro@sptech.school', 'senha123', 1);
+('Gerente', 'Pedro Ablublé', 'pedro@sptech.school', 'senha123', 1000);
 
 CREATE TABLE fazenda (
 idFazenda INT PRIMARY KEY AUTO_INCREMENT,
@@ -49,10 +48,10 @@ cep CHAR(8) NOT NULL,
 tamanhoFazenda VARCHAR(45),
 fkEmpresaDona INT,
 CONSTRAINT fk_empresadona_const FOREIGN KEY (fkEmpresaDona) REFERENCES empresa(idEmpresa)
-);
+)AUTO_INCREMENT = 100;
 
 INSERT INTO fazenda (nome, cep, fkEmpresaDona) VALUES
-('Abelinha', '12345678', 1);
+('Abelinha', '12345678', 1000);
 
 CREATE TABLE silos (
 idSilos INT PRIMARY KEY AUTO_INCREMENT,
@@ -68,7 +67,7 @@ CONSTRAINT fk_fazenda_const FOREIGN KEY (fkFazenda) REFERENCES fazenda(idFazenda
 );
 
 INSERT INTO silos (nomeSilo, fkFazenda) VALUES
-('Alpha', 1);
+('Alpha', 100);
 
 CREATE TABLE sensor (
 idSensor INT PRIMARY KEY AUTO_INCREMENT,
@@ -77,12 +76,14 @@ fkSilo INT,
 CONSTRAINT fk_silo_const FOREIGN KEY (fkSilo) REFERENCES silos(idSilos)
 );
 
+INSERT INTO sensor (numSensor, fkSilo) VALUES
+('1', 1);
+
 CREATE TABLE registro (
 idRegistro INT AUTO_INCREMENT,
 distancia_sensor FLOAT,
 percentual_ocupacao DECIMAL (3,1),
 dt_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
-ativo TINYINT,
 fkSensor INT,
 PRIMARY KEY (idRegistro, fkSensor),
 CONSTRAINT fk_sensor_const FOREIGN KEY (fkSensor) REFERENCES sensor(idSensor)

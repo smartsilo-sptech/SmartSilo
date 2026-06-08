@@ -13,16 +13,15 @@ const HABILITAR_OPERACAO_INSERIR = true;
 // função para comunicação serial
 const serial = async (
     valoresDistancia,
-    valoresPercentual,
-    valoresStatus
+    valoresPercentual
 ) => {
 
     // conexão com o banco de dados MySQL
     let poolBancoDados = mysql.createPool(
         {
             host: '127.0.0.1',
-            user: 'root',
-            password: 'SPTech#2024',
+            user: 'administrador',
+            password: 'Urubu@100',
             database: 'sistema_silos',
             port: 3307
         }
@@ -54,22 +53,20 @@ const serial = async (
         const valores = data.split(';');
         const distancia = parseFloat(valores[0]);
         const percentual = parseFloat(valores[1]);
-        const status = parseInt(valores[2]);
 
         // armazena os valores dos sensores nos arrays correspondentes
         valoresDistancia.push(distancia);
         valoresPercentual.push(percentual);
-        valoresStatus.push(status);
 
         // insere os dados no banco de dados (se habilitado)
         if (HABILITAR_OPERACAO_INSERIR) {
 
             // este insert irá inserir os dados na tabela "medida"
             await poolBancoDados.execute(
-                'INSERT INTO registro (distancia_sensor, percentual_ocupacao, ativo, fkSensor) VALUES (?, ?, ?, 1)',
-                [distancia, percentual, status]
+                'INSERT INTO registro (distancia_sensor, percentual_ocupacao, fkSensor) VALUES (?, ?, 1)',
+                [distancia, percentual]
             );
-            console.log("valores inseridos no banco: ", distancia + ", " + percentual + ", " + status);
+            console.log("valores inseridos no banco: ", distancia + ", " + percentual);
 
         }
 
@@ -84,8 +81,7 @@ const serial = async (
 // função para criar e configurar o servidor web
 const servidor = (
     valoresDistancia,
-    valoresPercentual,
-    valoresStatus
+    valoresPercentual
 ) => {
     const app = express();
 
@@ -107,9 +103,6 @@ const servidor = (
     });
     app.get('/sensores/digital', (_, response) => {
         return response.json(valoresPercentual);
-    });
-    app.get('/sensores/status', (_, response) => {
-        return response.json(valoresStatus);
     })
 }
 
@@ -118,19 +111,16 @@ const servidor = (
     // arrays para armazenar os valores dos sensores
     const valoresDistancia = [];
     const valoresPercentual = [];
-    const valoresStatus = [];
 
     // inicia a comunicação serial
     await serial(
         valoresDistancia,
-        valoresPercentual,
-        valoresStatus
+        valoresPercentual
     );
 
     // inicia o servidor web
     servidor(
         valoresDistancia,
-        valoresPercentual,
-        valoresStatus
+        valoresPercentual
     );
 })();
