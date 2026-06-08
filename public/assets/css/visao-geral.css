@@ -1,280 +1,242 @@
 body {
     display: flex;
-    margin: 0px;
+    margin: 0;
     background: #0eac50;
     flex-direction: row;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 a {
     text-decoration: none;
 }
 
-/* --==== MAIN ====----------------------------------------------------- */
+/* ================= MAIN ================= */
 
 main {
-    margin: 0px;
     flex: 1;
 }
 
 .content {
     display: flex;
     flex-direction: column;
-    margin: 30px;
+    margin: 20px;
 }
 
 .message {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     color: #fafafa;
 }
 
 .span_message {
     font-size: 30px;
+    font-weight: bold;
 }
 
-.charts {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 10px;
-}
-
-.charts_left {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin-right: 10px;
-}
+/* ================= KPIs ================= */
 
 .left_charts_up {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.total_silos,
+.alertas_ativos,
+.status_geral {
+    background: #fafafa;
+    border: 4px solid #189D50;
+    border-radius: 12px;
+
+    min-height: 90px;
+
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px;
+    text-align: center;
+}
+
+.title-kpi {
+    font-size: 14px;
     font-weight: bold;
-    font-size: larger;
-    gap: 30px;
+    color: #333;
 }
 
-.total_silos {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 4px solid #189D50;
-    background: #fafafa;
-    border-radius: 10px;
-    padding: 10px;
-    width: 100%;
-    gap: 10px;
-}
-
-.alertas_ativos {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 4px solid #189D50;
-    background: #fafafa;
-    border-radius: 10px;
-    padding: 10px;
-    width: 100%;
-    gap: 10px;
+.data-kpi-qtdsilos,
+.data-kpi-alertas,
+.data-kpi-status {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 8px;
 }
 
 .data-kpi-alertas {
-    color: red;
+    color: rgb(167, 0, 0);
 }
 
-.status_geral {
+/* ================= GRÁFICOS ================= */
+
+.charts {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 4px solid #189D50;
-    background: #fafafa;
-    border-radius: 10px;
-    padding: 10px;
-    width: 100%;
-    gap: 10px;
+    gap: 15px;
 }
 
-.data-kpi-status {
-    color: red;
-    margin-right: 10px;
+.charts_left {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+.charts_right {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .left_charts_down {
-    display: flex;
-    height: 400px;
-    margin-top: 10px;
+    height: 500px;
 }
 
-.silos_tempo_real, .silos_alerta {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border: 4px solid #189D50;
+.right_charts_up {
+    height: 350px;
+}
+
+.right_charts_down {
+    flex: 1;
+}
+
+.silos_tempo_real,
+.silos_alerta,
+.acoes-recomendadas {
     background: #fafafa;
-    border-radius: 10px;
+    border: 4px solid #189D50;
+    border-radius: 12px;
+
+    padding: 15px;
+
+    box-sizing: border-box;
+}
+
+.silos_tempo_real,
+.silos_alerta {
+    position: relative;
 }
 
 .charts-title {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: larger;
-}
 
-.silos_tempo_real {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
-    padding: 10px;
-    padding-top: 20px;
-}
+    text-align: center;
 
-.charts_right {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 80%;
-    margin-left: 10px;
-}
+    font-size: 18px;
+    font-weight: bold;
 
-.right_charts_up {
-    display: flex;
-    height: 320px;
     margin-bottom: 10px;
 }
 
-.silos_alerta {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
-    padding: 10px;
-    padding-top: 30px;
-    padding-bottom: 30px;
+canvas {
+    width: 100% !important;
+    height: 100% !important;
 }
 
-.right_charts_down {
-    display: flex;
-    margin-top: 65px;
+/* ================= RECOMENDAÇÕES ================= */
+
+.acoes-recomendadas {
+    min-height: 180px;
 }
 
-.faixas {
+#acoesContainer {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    border: 4px solid #189D50;
-    background: #fafafa;
-    border-radius: 10px;
-    padding: 10px;
-    font-weight: bold;
-}
-
-.span_faixas {
-    font-size: large;
-}
-
-.faixa_ideal {
-    color: #0eac50;
-}
-
-.faixa_alerta {
-    color: rgb(235, 199, 0);
-}
-
-.faixa_critica {
-    color: rgb(167, 0, 0);
-}
-
-
-/* -- STATUS ---------------------------------------------------------- */
-
-.status {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    margin-top: 30px;
-}
-
-.silos {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     gap: 10px;
 }
 
-.box-silo-red {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgb(167, 0, 0);
-    height: 100px;
-    width: 140px;
-    border-radius: 10px;
-    padding: 8px;
+.card-recomendacao {
+    background: #f4f4f4;
+    border-left: 5px solid #189D50;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 14px;
 }
 
-.internal-box-red {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgb(255, 137, 137);
-    height: 100px;
-    width: 100%;
-    border-radius: 5px;
-    font-size: larger;
+/* ================= GRID DOS SILOS ================= */
+
+.status {
+    margin-top: 25px;
 }
 
+.silos {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+}
+
+.box-silo-red,
+.box-silo-yellow,
 .box-silo-green {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #17c707;
-    height: 100px;
-    width: 140px;
     border-radius: 10px;
     padding: 8px;
+    min-height: 90px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.internal-box-green {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #8efd84;
-    height: 100px;
-    width: 100%;
-    border-radius: 5px;
-    font-size: larger;
+.box-silo-red {
+    background: rgb(167, 0, 0);
 }
 
 .box-silo-yellow {
+    background: rgb(235, 199, 0);
+}
+
+.box-silo-green {
+    background: #17c707;
+}
+
+.internal-box-red,
+.internal-box-yellow,
+.internal-box-green {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 6px;
+
     display: flex;
-    align-items: center;
     justify-content: center;
-    background-color: rgb(235, 199, 0);
-    height: 100px;
-    width: 140px;
-    border-radius: 10px;
-    padding: 8px;
+    align-items: center;
+
+    text-align: center;
+    font-weight: bold;
+
+    padding: 10px;
+}
+
+.internal-box-red {
+    background: rgb(255, 137, 137);
 }
 
 .internal-box-yellow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgb(255, 238, 141);
-    height: 100px;
-    width: 100%;
-    border-radius: 5px;
-    font-size: larger;
+    background: rgb(255, 238, 141);
 }
+
+.internal-box-green {
+    background: #8efd84;
+}
+
+.title-box {
+    font-size: 14px;
+}
+
+/* ================= USUÁRIO ================= */
 
 #div_username {
     font-size: larger;
