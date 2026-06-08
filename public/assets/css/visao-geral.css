@@ -1,268 +1,297 @@
 body {
     display: flex;
     margin: 0;
-    background: #0eac50;
-    flex-direction: row;
-    overflow-x: hidden;
+    background: #f5f7f8;
+    min-height: 100vh;
 }
 
 a {
     text-decoration: none;
 }
 
-/* ================= MAIN ================= */
-
 main {
     flex: 1;
 }
 
 .content {
-    display: flex;
-    flex-direction: column;
-    margin: 20px;
+    padding: 30px;
 }
+
+/* ================= HEADER ================= */
 
 .message {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 15px;
-    color: #fafafa;
+    align-items: center;
+
+    margin-bottom: 25px;
 }
 
 .span_message {
-    font-size: 30px;
-    font-weight: bold;
+    font-size: 32px;
+    font-weight: 700;
+    color: #222;
 }
 
-/* ================= KPIs ================= */
+/* ================= KPIS ================= */
 
 .left_charts_up {
+
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    margin-bottom: 15px;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 15px;
+
+    margin-bottom: 20px;
 }
 
 .total_silos,
 .alertas_ativos,
 .status_geral {
-    background: #fafafa;
-    border: 4px solid #189D50;
+
+    background: white;
+
+    border: 1px solid #d9e8de;
+
     border-radius: 12px;
 
-    min-height: 90px;
+    padding: 20px;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    padding: 10px;
     text-align: center;
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,0.05);
 }
 
 .title-kpi {
-    font-size: 14px;
-    font-weight: bold;
-    color: #333;
+
+    display: block;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #555;
 }
 
 .data-kpi-qtdsilos,
 .data-kpi-alertas,
 .data-kpi-status {
-    font-size: 24px;
-    font-weight: bold;
-    margin-top: 8px;
+
+    display: block;
+
+    margin-top: 10px;
+
+    font-size: 26px;
+
+    font-weight: 700;
+
+    color: #222;
 }
 
 .data-kpi-alertas {
-    color: rgb(167, 0, 0);
+    color: #AB0F0F;
 }
 
-/* ================= GRÁFICOS ================= */
+/* ================= CONTEÚDO ================= */
 
 .charts {
-    display: flex;
-    gap: 15px;
-}
 
-.charts_left {
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-}
+    display: grid;
 
-.charts_right {
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    grid-template-columns:
+        2fr 1fr;
+
+    gap: 20px;
 }
 
 .left_charts_down {
-    height: 500px;
+    height: 450px;
 }
 
-.right_charts_up {
-    height: 350px;
-}
+.silos_tempo_real {
 
-.right_charts_down {
-    flex: 1;
-}
+    background: white;
 
-.silos_tempo_real,
-.silos_alerta,
-.acoes-recomendadas {
-    background: #fafafa;
-    border: 4px solid #189D50;
+    border: 1px solid #d9e8de;
+
     border-radius: 12px;
 
-    padding: 15px;
+    padding: 20px;
 
-    box-sizing: border-box;
-}
+    box-shadow:
+        0 2px 8px rgba(0,0,0,0.05);
 
-.silos_tempo_real,
-.silos_alerta {
-    position: relative;
+    height: 100%;
 }
 
 .charts-title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+    display: block;
 
     text-align: center;
 
     font-size: 18px;
-    font-weight: bold;
 
-    margin-bottom: 10px;
+    font-weight: 700;
+
+    margin-bottom: 20px;
+
+    color: #222;
 }
 
-canvas {
+/* ================= GRÁFICO ================= */
+
+#barras_tempo_real {
+
     width: 100% !important;
-    height: 100% !important;
+
+    height: 350px !important;
 }
 
 /* ================= RECOMENDAÇÕES ================= */
 
 .acoes-recomendadas {
-    min-height: 180px;
+
+    background: white;
+
+    border: 1px solid #d9e8de;
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,0.05);
 }
 
 #acoesContainer {
+
     display: flex;
+
     flex-direction: column;
-    gap: 10px;
-}
 
-.card-recomendacao {
-    background: #f4f4f4;
-    border-left: 5px solid #189D50;
-    border-radius: 6px;
-    padding: 10px;
-    font-size: 14px;
-}
-
-/* ================= GRID DOS SILOS ================= */
-
-.status {
-    margin-top: 25px;
-}
-
-.silos {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
     gap: 12px;
 }
 
-.box-silo-red,
-.box-silo-yellow,
-.box-silo-green {
-    border-radius: 10px;
-    padding: 8px;
-    min-height: 90px;
+.card-recomendacao {
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background: #f5f7f8;
+
+    border-radius: 8px;
+
+    padding: 12px;
+
+    color: #333;
 }
 
+.card-recomendacao.critico {
+
+    border-left: 5px solid #AB0F0F;
+
+    background: #fff5f5;
+}
+
+/* ================= GRID SILOS ================= */
+
+.status {
+    margin-top: 30px;
+}
+
+.silos {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(180px, 1fr));
+
+    gap: 12px;
+}
+
+.box-silo-green,
+.box-silo-yellow,
 .box-silo-red {
-    background: rgb(167, 0, 0);
+
+    border-radius: 10px;
+
+    padding: 5px;
+}
+
+.box-silo-green {
+    background: #0FAB51;
 }
 
 .box-silo-yellow {
-    background: rgb(235, 199, 0);
+    background: #FFCD04;
 }
 
-.box-silo-green {
-    background: #17c707;
+.box-silo-red {
+    background: #AB0F0F;
 }
 
-.internal-box-red,
+.internal-box-green,
 .internal-box-yellow,
-.internal-box-green {
-    width: 100%;
-    height: 100%;
+.internal-box-red {
 
-    border-radius: 6px;
+    background: white;
+
+    border-radius: 8px;
+
+    min-height: 70px;
 
     display: flex;
+
     justify-content: center;
+
     align-items: center;
 
     text-align: center;
-    font-weight: bold;
 
     padding: 10px;
 }
 
-.internal-box-red {
-    background: rgb(255, 137, 137);
-}
-
-.internal-box-yellow {
-    background: rgb(255, 238, 141);
-}
-
-.internal-box-green {
-    background: #8efd84;
-}
-
 .title-box {
+
     font-size: 14px;
+
+    font-weight: 600;
+
+    color: #333;
 }
 
 /* ================= USUÁRIO ================= */
 
 #div_username {
-    font-size: larger;
-    font-weight: bold;
+    font-size: 16px;
+    font-weight: 700;
 }
 
 .limparSessao {
+
     display: flex;
+
     justify-content: center;
     align-items: center;
 
-    background-color: #189D50;
-    
+    width: 100%;
+
+    height: 42px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #0FAB51;
+
     color: white;
-    font-weight: bold;
 
-    border: 1px solid #0eac50;
-    border-radius: 5px;
-
-    height: 7%;
-    width: 70%;
+    font-weight: 700;
 
     cursor: pointer;
 }
 
 .limparSessao:hover {
-    background-color: #0e4209;
-    border: 1px solid #0e4209;
+    background: #0b8d42;
 }
