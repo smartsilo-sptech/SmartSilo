@@ -3,7 +3,7 @@ body {
     margin: 0;
     background: #0eac50;
     flex-direction: row;
-    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 main {

@@ -1,74 +1,30 @@
 body {
     display: flex;
     margin: 0;
-    background: #0eac50;
-    flex-direction: row;
-    overflow-x: hidden;
+    background: #f5f7f8;
+    min-height: 100vh;
 }
 
 main {
-    margin: 0;
     flex: 1;
 }
 
-/* ================= MAIN ================= */
-
 .content {
-    display: flex;
-    flex-direction: column;
-    margin: 30px;
+    padding: 30px;
 }
 
 .message {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 15px;
-    color: #fafafa;
+    align-items: center;
+
+    margin-bottom: 30px;
 }
 
 .span_message {
-    font-size: 30px;
-    font-weight: bold;
-}
-
-/* ================= FILTROS ================= */
-
-.filtros {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-
-    margin-bottom: 20px;
-}
-
-.filtro-label {
-    font-weight: bold;
-    font-size: larger;
-    color: #fafafa;
-}
-
-.btn-filtro {
-    border: 4px solid #189D50;
-    background: #fafafa;
-    border-radius: 10px;
-
-    padding: 8px 18px;
-
-    font-weight: bold;
-    cursor: pointer;
-
-    transition: 0.2s;
-}
-
-.btn-filtro:hover {
-    background-color: #dff5e8;
-}
-
-.btn-filtro.active {
-    background: #189D50;
-    color: #fafafa;
+    font-size: 32px;
+    font-weight: 700;
+    color: #222;
 }
 
 /* ================= GRID ================= */
@@ -76,56 +32,83 @@ main {
 .grid-silos {
     display: grid;
 
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns:
+        repeat(auto-fill, minmax(320px, 1fr));
 
     gap: 20px;
 }
 
-/* ================= CARDS ================= */
+/* ================= CARD ================= */
 
 .card-silo {
-    display: flex;
-    flex-direction: column;
+    background: #ffffff;
 
-    border: 4px solid #189D50;
-    background: #fafafa;
+    border: 1px solid #d9e8de;
 
     border-radius: 12px;
 
-    padding: 15px;
+    padding: 20px;
 
-    height: 340px;
+    box-shadow:
+        0 2px 8px rgba(0,0,0,0.05);
 
-    box-sizing: border-box;
+    transition: 0.2s;
 }
 
-.card-titulo {
-    font-size: 22px;
-    font-weight: bold;
+.card-silo:hover {
+    transform: translateY(-2px);
 
-    margin-bottom: 10px;
+    box-shadow:
+        0 4px 14px rgba(0,0,0,0.08);
+}
+
+/* ================= STATUS ================= */
+
+.card-silo.normal {
+    border-left: 6px solid #0FAB51;
+}
+
+.card-silo.alerta {
+    border-left: 6px solid #FFCD04;
+}
+
+.card-silo.critico {
+    border-left: 6px solid #AB0F0F;
+}
+
+/* ================= TÍTULOS ================= */
+
+.card-titulo {
+    display: block;
+
+    font-size: 22px;
+    font-weight: 700;
+
+    color: #222;
+
+    margin-bottom: 12px;
 }
 
 .card-info {
     display: flex;
-    justify-content: space-between;
 
-    font-size: 15px;
-    font-weight: bold;
+    justify-content: flex-start;
 
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+
+    font-weight: 600;
 }
 
 .info-ocupacao-verde {
-    color: #0eac50;
+    color: #0FAB51;
 }
 
 .info-ocupacao-amarelo {
-    color: rgb(235, 199, 0);
+    color: #c49b00;
 }
 
 .info-ocupacao-vermelho {
-    color: rgb(167, 0, 0);
+    color: #AB0F0F;
 }
 
 /* ================= GRÁFICO ================= */
@@ -134,9 +117,8 @@ main {
     position: relative;
 
     width: 100%;
-    height: 100%;
 
-    margin-top: 10px;
+    height: 220px;
 }
 
 .card-chart-wrapper canvas {
@@ -144,47 +126,59 @@ main {
     height: 100% !important;
 }
 
-/* ================= STATUS VISUAL ================= */
+/* ================= RESPONSIVO ================= */
 
-.card-silo.critico {
-    border-color: rgb(167, 0, 0);
+@media (max-width: 1200px) {
+
+    .grid-silos {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
 }
 
-.card-silo.alerta {
-    border-color: rgb(235, 199, 0);
-}
+@media (max-width: 768px) {
 
-.card-silo.ideal {
-    border-color: #189D50;
+    .grid-silos {
+        grid-template-columns:
+            1fr;
+    }
+
 }
 
 /* ================= USUÁRIO ================= */
 
 #div_username {
-    font-size: larger;
-    font-weight: bold;
+    font-size: 16px;
+    font-weight: 700;
 }
 
 .limparSessao {
+
     display: flex;
+
     justify-content: center;
     align-items: center;
 
-    background-color: #189D50;
+    width: 100%;
+
+    height: 42px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #0FAB51;
 
     color: white;
-    font-weight: bold;
 
-    border: 1px solid #0eac50;
-    border-radius: 5px;
-
-    width: 70%;
-    height: 40px;
+    font-weight: 700;
 
     cursor: pointer;
+
+    transition: 0.2s;
 }
 
 .limparSessao:hover {
-    background-color: #0e4209;
-    border: 1px solid #0e4209;
+    background: #0b8d42;
 }

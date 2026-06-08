@@ -4,6 +4,8 @@ document.getElementById("div_username").innerHTML =
 document.getElementById("div_bemVindo").innerHTML =
     `Bem vindo(a) ${sessionStorage.NOME_USUARIO}!`;
 
+const graficos = {};
+
 function obterStatus(ocupacao) {
 
     if (ocupacao >= 90) {
@@ -20,7 +22,7 @@ function obterStatus(ocupacao) {
 function obterCor(status) {
 
     if (status == "normal") {
-        return "#0eac50";
+        return "#0FAB51";
     }
 
     if (status == "alerta") {
@@ -46,7 +48,9 @@ function obterClasse(status) {
 function carregarPanoramica() {
 
     fetch("/dashboard/ultima-leitura")
+
         .then(res => res.json())
+
         .then(dados => {
 
             const grid =
@@ -62,7 +66,8 @@ function carregarPanoramica() {
                 const card =
                     document.createElement("div");
 
-                card.className = "card-silo";
+                card.className =
+                    `card-silo ${status}`;
 
                 card.innerHTML = `
                     <span class="card-titulo">
@@ -79,8 +84,10 @@ function carregarPanoramica() {
                     </div>
 
                     <div class="card-chart-wrapper">
+
                         <canvas id="grafico${index}">
                         </canvas>
+
                     </div>
                 `;
 
@@ -91,9 +98,11 @@ function carregarPanoramica() {
                     silo.percentual_ocupacao,
                     status
                 );
+
             });
 
         })
+
         .catch(erro => {
 
             console.error(
@@ -106,40 +115,65 @@ function carregarPanoramica() {
 
 function criarGrafico(id, ocupacao, status) {
 
-    const cor = obterCor(status);
+    const canvas =
+        document.getElementById(`grafico${id}`);
 
-    new Chart(
-        document.getElementById(`grafico${id}`),
+    if (!canvas) return;
+
+    if (graficos[id]) {
+        graficos[id].destroy();
+    }
+
+    const cor =
+        obterCor(status);
+
+    graficos[id] = new Chart(
+        canvas,
         {
             type: "doughnut",
 
             data: {
+
                 labels: [
                     "Ocupado",
                     "Disponível"
                 ],
 
-                datasets: [{
-                    data: [
-                        ocupacao,
-                        100 - ocupacao
-                    ],
+                datasets: [
+                    {
+                        data: [
+                            ocupacao,
+                            100 - ocupacao
+                        ],
 
-                    backgroundColor: [
-                        cor,
-                        "#e5e5e5"
-                    ]
-                }]
+                        backgroundColor: [
+                            cor,
+                            "#E5E7EB"
+                        ],
+
+                        borderWidth: 0
+                    }
+                ]
             },
 
             options: {
 
                 responsive: true,
 
+                maintainAspectRatio: false,
+
+                cutout: "55%",
+
                 plugins: {
+
                     legend: {
                         display: false
+                    },
+
+                    tooltip: {
+                        enabled: true
                     }
+
                 }
 
             }

@@ -207,23 +207,31 @@ function carregarRecomendacoes() {
             "acoesContainer"
         ).innerHTML = `
 
-            <p>
-            ${silo.nomeSilo}
-            atingiu
-            ${silo.percentual_ocupacao}%.
-            </p>
+            <div class="card-recomendacao critico">
 
-            <p>
-            ✓ Planejar escoamento da carga.
-            </p>
+                <strong>
+                    ${silo.nomeSilo}
+                </strong>
 
-            <p>
-            ✓ Verificar disponibilidade do próximo silo.
-            </p>
+                atingiu
 
-            <p>
-            ✓ Avaliar comercialização do lote.
-            </p>
+                <strong>
+                    ${silo.percentual_ocupacao}%
+                </strong>
+
+            </div>
+
+            <div class="card-recomendacao">
+                Planejar escoamento da carga
+            </div>
+
+            <div class="card-recomendacao">
+                Verificar disponibilidade do próximo silo
+            </div>
+
+            <div class="card-recomendacao">
+                Avaliar comercialização do lote
+            </div>
 
         `;
 
