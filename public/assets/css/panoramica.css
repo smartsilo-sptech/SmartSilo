@@ -1,17 +1,17 @@
 body {
     display: flex;
-    margin: 0px;
+    margin: 0;
     background: #0eac50;
     flex-direction: row;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 main {
-    margin: 0px;
+    margin: 0;
     flex: 1;
 }
 
-/* --==== MAIN ====----------------------------------------------------- */
+/* ================= MAIN ================= */
 
 .content {
     display: flex;
@@ -23,21 +23,23 @@ main {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     color: #fafafa;
 }
 
 .span_message {
     font-size: 30px;
+    font-weight: bold;
 }
 
-/* -- FILTROS ---------------------------------------------------------- */
+/* ================= FILTROS ================= */
 
 .filtros {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 10px;
+
     margin-bottom: 20px;
 }
 
@@ -51,10 +53,17 @@ main {
     border: 4px solid #189D50;
     background: #fafafa;
     border-radius: 10px;
-    padding: 6px 16px;
+
+    padding: 8px 18px;
+
     font-weight: bold;
-    font-size: medium;
     cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.btn-filtro:hover {
+    background-color: #dff5e8;
 }
 
 .btn-filtro.active {
@@ -62,50 +71,94 @@ main {
     color: #fafafa;
 }
 
-/* -- GRID DE SILOS ---------------------------------------------------- */
+/* ================= GRID ================= */
 
 .grid-silos {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
     gap: 20px;
 }
+
+/* ================= CARDS ================= */
 
 .card-silo {
     display: flex;
     flex-direction: column;
+
     border: 4px solid #189D50;
     background: #fafafa;
-    border-radius: 10px;
-    padding: 10px;
-    width: 30%;
-    height: 300px;
+
+    border-radius: 12px;
+
+    padding: 15px;
+
+    height: 340px;
+
+    box-sizing: border-box;
 }
 
 .card-titulo {
-    font-size: larger;
+    font-size: 22px;
     font-weight: bold;
-    margin-bottom: 6px;
+
+    margin-bottom: 10px;
 }
 
 .card-info {
     display: flex;
-    flex-direction: row;
-    gap: 20px;
-    font-size: medium;
+    justify-content: space-between;
+
+    font-size: 15px;
     font-weight: bold;
-    margin-bottom: 8px;
+
+    margin-bottom: 10px;
 }
 
-.info-ocupacao-verde { color: #0eac50; }
-.info-ocupacao-amarelo { color: rgb(235, 199, 0); }
-.info-ocupacao-vermelho { color: rgb(167, 0, 0); }
+.info-ocupacao-verde {
+    color: #0eac50;
+}
+
+.info-ocupacao-amarelo {
+    color: rgb(235, 199, 0);
+}
+
+.info-ocupacao-vermelho {
+    color: rgb(167, 0, 0);
+}
+
+/* ================= GRÁFICO ================= */
 
 .card-chart-wrapper {
     position: relative;
+
     width: 100%;
     height: 100%;
+
+    margin-top: 10px;
 }
+
+.card-chart-wrapper canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* ================= STATUS VISUAL ================= */
+
+.card-silo.critico {
+    border-color: rgb(167, 0, 0);
+}
+
+.card-silo.alerta {
+    border-color: rgb(235, 199, 0);
+}
+
+.card-silo.ideal {
+    border-color: #189D50;
+}
+
+/* ================= USUÁRIO ================= */
 
 #div_username {
     font-size: larger;
@@ -118,15 +171,17 @@ main {
     align-items: center;
 
     background-color: #189D50;
-    
+
     color: white;
     font-weight: bold;
 
     border: 1px solid #0eac50;
     border-radius: 5px;
 
-    height: 7%;
     width: 70%;
+    height: 40px;
+
+    cursor: pointer;
 }
 
 .limparSessao:hover {

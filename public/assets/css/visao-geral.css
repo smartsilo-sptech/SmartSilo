@@ -258,6 +258,8 @@ canvas {
 
     height: 7%;
     width: 70%;
+
+    cursor: pointer;
 }
 
 .limparSessao:hover {
