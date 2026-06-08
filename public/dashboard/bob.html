@@ -62,12 +62,13 @@
         validarSessao()
 
         div_username.innerHTML = sessionStorage.NOME_USUARIO
-        div_bemVindo.innerHTML = `Bem vindo(a) ${sessionStorage.NOME_USUARIO}!`
 
         async function gerarResposta() {
+            console.log('botão clicado')
             const pergunta = document.getElementById('pergunta').value;
+            console.log('pergunta:', pergunta)
 
-            const response = await fetch('/bob/perguntar', {
+            const response = await fetch('/bob/perguntar', {    
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -75,7 +76,9 @@
                 body: JSON.stringify({ pergunta })
             });
 
+            console.log('status da resposta:', response.status)
             const data = await response.json();
+            console.log('data recebida:', data)
 
             resposta.style.display = 'block';
             document.getElementById('resposta').innerText = data.resultado;
