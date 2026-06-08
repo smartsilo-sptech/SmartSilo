@@ -137,3 +137,9 @@ vite.config.ts.timestamp-*
 
 # DS_Store
 .DS_Store
+
+# .env.dev
+.env.dev
+
+# .env
+.env
