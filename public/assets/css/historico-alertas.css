@@ -1,15 +1,16 @@
 body {
     display: flex;
-    margin: 0px;
+    margin: 0;
     background: #0eac50;
     flex-direction: row;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 main {
-    margin: 0px;
     flex: 1;
 }
+
+/* ================= MAIN ================= */
 
 .content {
     display: flex;
@@ -19,75 +20,117 @@ main {
 
 .message {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
 }
 
 .span-message {
     font-size: 30px;
+    font-weight: bold;
     color: #fafafa;
 }
 
 .description {
-    display: flex;
-    flex-direction: row;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 .span-description {
     color: #fafafa;
+    font-size: 16px;
 }
+
+/* ================= LISTA DE ALERTAS ================= */
 
 .alerts {
     display: flex;
     flex-direction: column;
+
     width: 100%;
     height: 750px;
-    margin-top: 30px;
+
+    margin-top: 25px;
 }
 
 .alert-boxes {
     display: flex;
     flex-direction: column;
+
     background-color: #0e853f;
+
     border: 10px solid #0e853f;
-    padding: 5px;
-    border-radius: 10px;
-    gap: 10px;
-    overflow-y: scroll;
-    font-size: large;
+    border-radius: 12px;
+
+    padding: 10px;
+
+    gap: 12px;
+
+    overflow-y: auto;
 }
 
-.box-alert-yellow {
-    display: flex;
-    justify-content: space-between;
-    background-color: #FFCD04;
-    padding: 10px;
-    border-radius: 5px;
-}
+/* ================= ALERTA CRÍTICO ================= */
 
 .box-alert-red {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+
     background-color: rgb(167, 0, 0);
-    color: #fafafa;
-    padding: 10px;
-    border-radius: 5px;
+
+    color: white;
+
+    padding: 15px;
+
+    border-radius: 8px;
+
+    font-weight: bold;
 }
 
+/* ================= ALERTA MÉDIO ================= */
+
+.box-alert-yellow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: #FFCD04;
+
+    color: #222;
+
+    padding: 15px;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+}
+
+/* ================= COLUNAS ================= */
+
 .span-data-alert {
-    width: 300px;
+    width: 25%;
 }
 
 .span-msg-alert {
-    width: 300px;
+    width: 50%;
 }
 
 .span-faixa-alert {
+    width: 25%;
+
     display: flex;
     justify-content: flex-end;
-    width: 300px;
 }
+
+/* ================= SCROLL ================= */
+
+.alert-boxes::-webkit-scrollbar {
+    width: 10px;
+}
+
+.alert-boxes::-webkit-scrollbar-thumb {
+    background-color: #189D50;
+    border-radius: 10px;
+}
+
+/* ================= USUÁRIO ================= */
 
 #div_username {
     font-size: larger;
@@ -100,15 +143,17 @@ main {
     align-items: center;
 
     background-color: #189D50;
-    
+
     color: white;
     font-weight: bold;
 
     border: 1px solid #0eac50;
     border-radius: 5px;
 
-    height: 7%;
     width: 70%;
+    height: 40px;
+
+    cursor: pointer;
 }
 
 .limparSessao:hover {
