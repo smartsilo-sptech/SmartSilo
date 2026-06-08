@@ -1,57 +1,50 @@
-var alertas = [];
+let alertas = [];
 
 window.onload = function () {
     obterAlertas();
     atualizacaoPeriodica();
-}
+};
 
 function obterAlertas() {
 
     fetch("/dashboard/alertas-recentes")
         .then(function (resposta) {
 
-            if (resposta.ok) {
-
-                resposta.json().then(function (resposta) {
-
-                    console.log(
-                        `Dados recebidos: ${JSON.stringify(resposta)}`
-                    );
-
-                    processarAlertas(resposta);
-
-                });
-
-            } else {
-
-                console.error(
-                    "Nenhum alerta encontrado ou erro na API"
-                );
-
+            if (!resposta.ok) {
+                throw new Error("Erro ao buscar alertas");
             }
+
+            return resposta.json();
+
+        })
+
+        .then(function (dados) {
+
+            processarAlertas(dados);
 
         })
 
         .catch(function (erro) {
 
             console.error(
-                `Erro ao obter alertas: ${erro.message}`
+                "Erro ao obter alertas:",
+                erro
             );
 
         });
 
 }
 
-function processarAlertas(resposta) {
+function processarAlertas(dados) {
 
     alertas = [];
 
-    for (var i = 0; i < resposta.length; i++) {
+    for (let i = 0; i < dados.length; i++) {
 
-        var alertaAtual = resposta[i];
+        const alertaAtual = dados[i];
 
-        var grauDeAviso = "";
-        var classeCor = "";
+        let grauDeAviso = "";
+        let classeCor = "";
 
         if (alertaAtual.ativo == 2) {
 
@@ -67,28 +60,40 @@ function processarAlertas(resposta) {
 
         alertas.push({
 
-            nomeSilo: alertaAtual.nomeSilo,
-            percentual: alertaAtual.percentual_ocupacao,
-            dataHora: alertaAtual.dt_registro,
-            grauDeAviso: grauDeAviso,
-            classeCor: classeCor
+            nomeSilo:
+                alertaAtual.nomeSilo,
+
+            percentual:
+                alertaAtual.percentual_ocupacao,
+
+            dataHora:
+                alertaAtual.dt_registro,
+
+            grauDeAviso:
+                grauDeAviso,
+
+            classeCor:
+                classeCor
 
         });
+
     }
 
     atualizarKPIs();
 
     exibirAlertas();
+
 }
 
 function atualizarKPIs() {
 
-    var totalAlertas = alertas.length;
+    const totalAlertas =
+        alertas.length;
 
-    var totalCriticos = 0;
-    var totalModerados = 0;
+    let totalCriticos = 0;
+    let totalModerados = 0;
 
-    for (var i = 0; i < alertas.length; i++) {
+    for (let i = 0; i < alertas.length; i++) {
 
         if (alertas[i].grauDeAviso == "CRÍTICO") {
 
@@ -102,71 +107,93 @@ function atualizarKPIs() {
 
     }
 
-    document.getElementById("kpiTotalAlertas").innerHTML =
-        totalAlertas;
+    document.getElementById(
+        "kpiTotalAlertas"
+    ).innerHTML = totalAlertas;
 
-    document.getElementById("kpiCriticos").innerHTML =
-        totalCriticos;
+    document.getElementById(
+        "kpiCriticos"
+    ).innerHTML = totalCriticos;
 
-    document.getElementById("kpiModerados").innerHTML =
-        totalModerados;
+    document.getElementById(
+        "kpiModerados"
+    ).innerHTML = totalModerados;
 
     if (alertas.length > 0) {
 
-        document.getElementById("kpiUltimoAlerta").innerHTML =
-            alertas[0].nomeSilo;
+        document.getElementById(
+            "kpiUltimoAlerta"
+        ).innerHTML = alertas[0].nomeSilo;
 
     } else {
 
-        document.getElementById("kpiUltimoAlerta").innerHTML =
-            "-";
+        document.getElementById(
+            "kpiUltimoAlerta"
+        ).innerHTML = "-";
 
     }
+
 }
 
 function exibirAlertas() {
 
-    var listaAlertas = document.getElementById("listaAlertas");
+    const listaAlertas =
+        document.getElementById("listaAlertas");
 
     listaAlertas.innerHTML = "";
 
-    for (var i = 0; i < alertas.length; i++) {
+    for (let i = 0; i < alertas.length; i++) {
 
-        var alertaAtual = alertas[i];
-
-        listaAlertas.innerHTML += transformarEmCard(alertaAtual);
+        listaAlertas.innerHTML +=
+            transformarEmLinha(alertas[i]);
 
     }
+
 }
 
 function transformarEmLinha(alertaAtual) {
 
     return `
+
         <div class="linha-alerta">
 
-            <span>${alertaAtual.nomeSilo}</span>
+            <span>
+                ${alertaAtual.nomeSilo}
+            </span>
 
-            <span>${alertaAtual.percentual}%</span>
+            <span>
+                ${alertaAtual.percentual}%
+            </span>
 
             <span class="${alertaAtual.classeCor}">
                 ${alertaAtual.grauDeAviso}
             </span>
 
             <span>
-                ${new Date(alertaAtual.dataHora)
-                    .toLocaleString("pt-BR")}
+                ${formatarData(alertaAtual.dataHora)}
             </span>
 
         </div>
+
     `;
+
+}
+
+function formatarData(dataBanco) {
+
+    return new Date(dataBanco)
+        .toLocaleString("pt-BR");
+
 }
 
 function atualizacaoPeriodica() {
 
-    obterAlertas();
+    setTimeout(function () {
 
-    setTimeout(
-        atualizacaoPeriodica,
-        10000
-    );
+        obterAlertas();
+
+        atualizacaoPeriodica();
+
+    }, 10000);
+
 }

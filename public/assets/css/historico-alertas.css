@@ -1,8 +1,7 @@
 body {
     display: flex;
     margin: 0;
-    background: #0eac50;
-    flex-direction: row;
+    background: #f4f6f8;
     overflow-y: auto;
 }
 
@@ -10,153 +9,189 @@ main {
     flex: 1;
 }
 
-/* ================= MAIN ================= */
-
 .content {
-    display: flex;
-    flex-direction: column;
-    margin: 30px;
+    padding: 30px;
 }
+
+/* ================= TÍTULO ================= */
 
 .message {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 25px;
 }
 
-.span-message {
-    font-size: 30px;
+.span_message {
+    font-size: 28px;
     font-weight: bold;
-    color: #fafafa;
+    color: #222;
 }
 
-.description {
-    margin-top: 15px;
+/* ================= KPIs ================= */
+
+.kpis-alertas {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+
+    margin-bottom: 25px;
 }
 
-.span-description {
-    color: #fafafa;
-    font-size: 16px;
-}
+.kpi-box {
 
-/* ================= LISTA DE ALERTAS ================= */
+    background: white;
 
-.alerts {
-    display: flex;
-    flex-direction: column;
-
-    width: 100%;
-    height: 750px;
-
-    margin-top: 25px;
-}
-
-.alert-boxes {
-    display: flex;
-    flex-direction: column;
-
-    background-color: #0e853f;
-
-    border: 10px solid #0e853f;
     border-radius: 12px;
 
-    padding: 10px;
+    padding: 20px;
 
-    gap: 12px;
+    border: 1px solid #e5e5e5;
+
+    box-shadow:
+    0 2px 8px rgba(0,0,0,.05);
+
+    text-align: center;
+}
+
+.kpi-box span {
+
+    color: #777;
+
+    font-size: 14px;
+}
+
+.kpi-box h2 {
+
+    margin-top: 10px;
+
+    color: #0FAB51;
+
+    font-size: 28px;
+}
+
+/* ================= TABELA ================= */
+
+.container-alertas {
+
+    background: white;
+
+    border-radius: 12px;
+
+    border: 1px solid #e5e5e5;
+
+    overflow: hidden;
+
+    box-shadow:
+    0 2px 8px rgba(0,0,0,.05);
+}
+
+.cabecalho-alertas {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr
+        1fr
+        2fr;
+
+    background: #0FAB51;
+
+    color: white;
+
+    font-weight: bold;
+
+    padding: 16px;
+}
+
+#listaAlertas {
+
+    max-height: 600px;
 
     overflow-y: auto;
 }
 
-/* ================= ALERTA CRÍTICO ================= */
+.linha-alerta {
 
-.box-alert-red {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr
+        1fr
+        2fr;
+
+    padding: 16px;
+
+    border-bottom:
+    1px solid #ececec;
+
     align-items: center;
+}
 
-    background-color: rgb(167, 0, 0);
+.linha-alerta:hover {
 
-    color: white;
+    background:
+    #f8f9fa;
+}
 
-    padding: 15px;
+/* ================= STATUS ================= */
 
-    border-radius: 8px;
+.perigo {
+
+    color: #AB0F0F;
 
     font-weight: bold;
 }
 
-/* ================= ALERTA MÉDIO ================= */
+.alerta {
 
-.box-alert-yellow {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    background-color: #FFCD04;
-
-    color: #222;
-
-    padding: 15px;
-
-    border-radius: 8px;
+    color: #FFB300;
 
     font-weight: bold;
-}
-
-/* ================= COLUNAS ================= */
-
-.span-data-alert {
-    width: 25%;
-}
-
-.span-msg-alert {
-    width: 50%;
-}
-
-.span-faixa-alert {
-    width: 25%;
-
-    display: flex;
-    justify-content: flex-end;
-}
-
-/* ================= SCROLL ================= */
-
-.alert-boxes::-webkit-scrollbar {
-    width: 10px;
-}
-
-.alert-boxes::-webkit-scrollbar-thumb {
-    background-color: #189D50;
-    border-radius: 10px;
 }
 
 /* ================= USUÁRIO ================= */
 
 #div_username {
+
     font-size: larger;
+
     font-weight: bold;
 }
 
 .limparSessao {
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
 
-    background-color: #189D50;
-
-    color: white;
-    font-weight: bold;
-
-    border: 1px solid #0eac50;
-    border-radius: 5px;
-
     width: 70%;
+
     height: 40px;
 
+    border: none;
+
+    border-radius: 8px;
+
+    background: #0FAB51;
+
+    color: white;
+
     cursor: pointer;
+
+    font-weight: bold;
 }
 
 .limparSessao:hover {
-    background-color: #0e4209;
-    border: 1px solid #0e4209;
+
+    background:
+    #0c8f42;
 }
