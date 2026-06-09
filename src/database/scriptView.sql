@@ -54,7 +54,6 @@ SELECT
     s.nomeSilo,
     r.percentual_ocupacao,
     r.dt_registro,
-    r.ativo
 FROM silos s
 JOIN sensor se
     ON s.idSilos = se.fkSilo
@@ -70,8 +69,8 @@ WHERE r.idRegistro IN (
 CREATE VIEW vw_status_silos AS
 SELECT
     CASE
-        WHEN percentual_ocupacao >= 90 THEN 'Critico'
-        WHEN percentual_ocupacao >= 80 THEN 'Alerta'
+        WHEN percentual_ocupacao >= 90 THEN 'Cheio'
+        WHEN percentual_ocupacao >= 80 THEN 'Quase Cheio'
         ELSE 'Normal'
     END AS statusSilo,
     COUNT(*) AS quantidade
@@ -91,7 +90,6 @@ SELECT
     nomeSilo,
     percentual_ocupacao,
     dt_registro,
-    ativo
 FROM registro r
 JOIN sensor se
     ON r.fkSensor = se.idSensor
@@ -110,7 +108,7 @@ SELECT
             THEN 1
             ELSE 0
         END
-    ) AS silosCriticos,
+    ) AS silosCheios,
     SUM(
         CASE
             WHEN percentual_ocupacao >= 80
@@ -118,5 +116,5 @@ SELECT
             THEN 1
             ELSE 0
         END
-    ) AS silosAlerta
+    ) AS silosQuaseCheios
 FROM vw_ultima_leitura_silo;
