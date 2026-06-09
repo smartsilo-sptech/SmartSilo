@@ -63,11 +63,27 @@ function buscarPrevisaoEnchimento() {
     return database.executar(instrucaoSql);
 }
 
+function buscarResumoStatusSilos() {
+
+    var instrucaoSql = `
+        SELECT * FROM vw_resumo_status_silos;
+    `;
+
+    console.log(
+        "Executando a instrução SQL: \n" +
+        instrucaoSql
+    );
+
+    return database.executar(instrucaoSql);
+
+}
+
 module.exports = {
     buscarResumoFazenda,
     buscarMonitoramentoSilos,
     buscarUltimaLeituraSilos,
     buscarAlertasRecentes,
     buscarSiloMaisCritico,
-    buscarPrevisaoEnchimento
+    buscarPrevisaoEnchimento,
+    buscarResumoStatusSilos
 }

@@ -120,6 +120,26 @@ function buscarPrevisaoEnchimento(req, res) {
 
 }
 
+function buscarResumoStatusSilos(req, res) {
+
+    dashboardModel.buscarResumoStatusSilos()
+
+    .then(function(resultado){
+
+        res.status(200).json(resultado);
+
+    })
+
+    .catch(function(erro){
+
+        console.log(erro);
+
+        res.status(500).json(erro);
+
+    });
+
+}
+
 module.exports = {
 
     buscarResumoFazenda,
@@ -127,6 +147,6 @@ module.exports = {
     buscarUltimaLeituraSilos,
     buscarAlertasRecentes,
     buscarSiloMaisCritico,
-    buscarPrevisaoEnchimento
-
+    buscarPrevisaoEnchimento,
+    buscarResumoStatusSilos
 };

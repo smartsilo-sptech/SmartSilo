@@ -61,36 +61,11 @@ function carregarPrevisao() {
 
 function carregarGraficoBarras() {
 
-    fetch("/dashboard/ultima-leitura")
+    fetch("/dashboard/monitoramento-silos")
     .then(res => res.json())
     .then(dados => {
 
-        const labels = [];
-        const ocupacoes = [];
-        const cores = [];
-
-        for(let i = 0; i < dados.length; i++) {
-
-            labels.push(dados[i].nomeSilo);
-
-            ocupacoes.push(
-                Number(dados[i].percentual_ocupacao)
-            );
-
-            if(dados[i].percentual_ocupacao >= 90) {
-
-                cores.push("#AB0F0F");
-
-            } else if(dados[i].percentual_ocupacao >= 80) {
-
-                cores.push("#FFCD04");
-
-            } else {
-
-                cores.push("#0eac50");
-
-            }
-        }
+        const info = dados[0];
 
         if(graficoBarras) {
             graficoBarras.destroy();
@@ -106,17 +81,39 @@ function carregarGraficoBarras() {
 
                 data: {
 
-                    labels: labels,
+                    labels: [
+
+                        "Cheios",
+                        "Quase Cheios",
+                        "Normais",
+                        "Vazios"
+
+                    ],
 
                     datasets: [{
 
-                        label: "Ocupação (%)",
+                        label: "Quantidade de Silos",
 
-                        data: ocupacoes,
+                        data: [
 
-                        backgroundColor: cores
+                            Number(info.silosCheios),
+                            Number(info.silosQuaseCheios),
+                            Number(info.silosNormais),
+                            Number(info.silosVazios)
+
+                        ],
+
+                        backgroundColor: [
+
+                            "#c1121f",
+                            "#fcbf49",
+                            "#2a9d8f",
+                            "#adb5bd"
+
+                        ]
 
                     }]
+
                 },
 
                 options: {
@@ -125,19 +122,43 @@ function carregarGraficoBarras() {
 
                     maintainAspectRatio: false,
 
+                    plugins: {
+
+                        legend: {
+
+                            display: false
+
+                        }
+
+                    },
+
                     scales: {
 
                         y: {
 
                             beginAtZero: true,
 
-                            max: 100
+                            ticks: {
+
+                                precision: 0
+
+                            }
 
                         }
+
                     }
+
                 }
+
             }
+
         );
+
+    });
+
+    fetch("/dashboard/ultima-leitura")
+    .then(res => res.json())
+    .then(dados => {
 
         renderizarGridSilos(dados);
 

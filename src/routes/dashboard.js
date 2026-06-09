@@ -27,4 +27,9 @@ router.get("/previsao-enchimento", function(req, res) {
     dashboardController.buscarPrevisaoEnchimento(req, res);
 });
 
+router.get("/resumo-status-silos", function(req, res) {
+    dashboardController.buscarResumoStatusSilos(req, res);
+
+});
+
 module.exports = router;
