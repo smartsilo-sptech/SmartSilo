@@ -44,18 +44,9 @@ function calcularSilo(distancia) {
 
   const percentual = (volumeGraos / volumeTotal) * 100;
 
-  let status = 0;
-
-  if (percentual >= config.percentualLimite) {
-    status = 2;
-  } else if (percentual >= config.percentualAlerta) {
-    status = 1;
-  }
-
   return {
     distancia,
-    percentual,
-    status,
+    percentual
   };
 }
 
@@ -136,7 +127,7 @@ const serial = async (valoresDistancia, valoresPercentual) => {
           );
 
           console.log(
-            `Inserido -> Distância: ${resultado.distancia} | Percentual: ${resultado.percentual.toFixed(2)}% | Status: ${resultado.status}`,
+            `Inserido -> Distância: ${resultado.distancia} | Percentual: ${resultado.percentual.toFixed(2)}%`,
           );
         }
       } catch (erro) {
