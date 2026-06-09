@@ -18,5 +18,5 @@ INSERT INTO silos (nomeSilo, fkFazenda) VALUES
 INSERT INTO sensor (numSensor, fkSilo) VALUES
 ('Sensor1A', 1);
 
-INSERT INTO registro (distancia_sensor, percentual_ocupacao, ativo, fkSensor) VALUES 
-(2.1, 89.9, 2, 1);
+INSERT INTO registro (distancia_sensor, percentual_ocupacao, fkSensor) VALUES 
+(2.1, 89.9, 1);
