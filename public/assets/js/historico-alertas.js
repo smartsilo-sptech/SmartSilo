@@ -1,17 +1,24 @@
 let alertas = [];
 
 window.onload = function () {
+
     obterAlertas();
     atualizacaoPeriodica();
+
 };
 
 function obterAlertas() {
 
     fetch("/dashboard/alertas-recentes")
+
         .then(function (resposta) {
 
             if (!resposta.ok) {
-                throw new Error("Erro ao buscar alertas");
+
+                throw new Error(
+                    "Erro ao buscar alertas"
+                );
+
             }
 
             return resposta.json();
@@ -46,14 +53,14 @@ function processarAlertas(dados) {
         let grauDeAviso = "";
         let classeCor = "";
 
-        if (alertaAtual.ativo == 2) {
+        if (alertaAtual.percentual_ocupacao >= 90) {
 
-            grauDeAviso = "CRÍTICO";
+            grauDeAviso = "CHEIO";
             classeCor = "perigo";
 
         } else {
 
-            grauDeAviso = "ALERTA";
+            grauDeAviso = "QUASE CHEIO";
             classeCor = "alerta";
 
         }
@@ -90,18 +97,18 @@ function atualizarKPIs() {
     const totalAlertas =
         alertas.length;
 
-    let totalCriticos = 0;
-    let totalModerados = 0;
+    let totalCheios = 0;
+    let totalQuaseCheios = 0;
 
     for (let i = 0; i < alertas.length; i++) {
 
-        if (alertas[i].grauDeAviso == "CRÍTICO") {
+        if (alertas[i].grauDeAviso == "CHEIO") {
 
-            totalCriticos++;
+            totalCheios++;
 
         } else {
 
-            totalModerados++;
+            totalQuaseCheios++;
 
         }
 
@@ -113,11 +120,11 @@ function atualizarKPIs() {
 
     document.getElementById(
         "kpiCriticos"
-    ).innerHTML = totalCriticos;
+    ).innerHTML = totalCheios;
 
     document.getElementById(
         "kpiModerados"
-    ).innerHTML = totalModerados;
+    ).innerHTML = totalQuaseCheios;
 
     if (alertas.length > 0) {
 
@@ -155,7 +162,7 @@ function transformarEmLinha(alertaAtual) {
 
     return `
 
-        <div class="linha-alerta">
+        <div class="linha-alerta ${alertaAtual.classeCor}">
 
             <span>
                 ${alertaAtual.nomeSilo}
@@ -165,7 +172,7 @@ function transformarEmLinha(alertaAtual) {
                 ${alertaAtual.percentual}%
             </span>
 
-            <span class="${alertaAtual.classeCor}">
+            <span>
                 ${alertaAtual.grauDeAviso}
             </span>
 

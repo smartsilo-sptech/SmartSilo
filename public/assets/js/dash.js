@@ -25,9 +25,9 @@ function carregarResumo() {
         dados[0].totalSilos;
 
         document.getElementById("kpiAlertas").innerHTML =
-        Number(dados[0].silosCriticos)
-        +
-        Number(dados[0].silosAlerta);
+            Number(dados[0].silosCheios)
+            +
+            Number(dados[0].silosQuaseCheios);
 
     });
 

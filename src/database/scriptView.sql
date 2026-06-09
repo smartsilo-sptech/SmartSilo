@@ -53,7 +53,7 @@ SELECT
     s.idSilos,
     s.nomeSilo,
     r.percentual_ocupacao,
-    r.dt_registro,
+    r.dt_registro
 FROM silos s
 JOIN sensor se
     ON s.idSilos = se.fkSilo
@@ -89,7 +89,7 @@ CREATE VIEW vw_alertas_recentes AS
 SELECT
     nomeSilo,
     percentual_ocupacao,
-    dt_registro,
+    dt_registro
 FROM registro r
 JOIN sensor se
     ON r.fkSensor = se.idSensor
@@ -117,4 +117,40 @@ SELECT
             ELSE 0
         END
     ) AS silosQuaseCheios
+FROM vw_ultima_leitura_silo;
+
+CREATE VIEW vw_resumo_status AS SELECT
+SUM(
+CASE
+WHEN percentual_ocupacao < 20
+THEN 1
+ELSE 0
+END
+) AS silosVazios,
+
+SUM(
+CASE
+WHEN percentual_ocupacao >= 20
+AND percentual_ocupacao < 80
+THEN 1
+ELSE 0
+END
+) AS silosNormais,
+
+SUM(
+CASE
+WHEN percentual_ocupacao >= 80
+AND percentual_ocupacao < 90
+THEN 1
+ELSE 0
+END
+) AS silosQuaseCheios,
+
+SUM(
+CASE
+WHEN percentual_ocupacao >= 90
+THEN 1
+ELSE 0
+END
+) AS silosCheios
 FROM vw_ultima_leitura_silo;
