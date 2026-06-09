@@ -66,7 +66,7 @@ function buscarPrevisaoEnchimento() {
 function buscarResumoStatusSilos() {
 
     var instrucaoSql = `
-        SELECT * FROM vw_resumo_status_silos;
+        SELECT * FROM vw_resumo_status;
     `;
 
     console.log(

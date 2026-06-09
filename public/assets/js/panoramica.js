@@ -45,6 +45,17 @@ function obterClasse(status) {
     return "info-ocupacao-vermelho";
 }
 
+function calcularPrevisao(ocupacao) {
+
+    const dias =
+        Math.max(
+            1,
+            Math.round((100 - ocupacao) / 2)
+        );
+
+    return `${dias} dias`;
+}
+
 function carregarPanoramica() {
 
     fetch("/dashboard/ultima-leitura")
@@ -61,7 +72,14 @@ function carregarPanoramica() {
             dados.forEach((silo, index) => {
 
                 const status =
-                    obterStatus(silo.percentual_ocupacao);
+                    obterStatus(
+                        silo.percentual_ocupacao
+                    );
+
+                const previsao =
+                    calcularPrevisao(
+                        silo.percentual_ocupacao
+                    );
 
                 const card =
                     document.createElement("div");
@@ -70,6 +88,7 @@ function carregarPanoramica() {
                     `card-silo ${status}`;
 
                 card.innerHTML = `
+
                     <span class="card-titulo">
                         ${silo.nomeSilo}
                     </span>
@@ -77,8 +96,17 @@ function carregarPanoramica() {
                     <div class="card-info">
 
                         <span class="${obterClasse(status)}">
+
                             Ocupação:
                             ${silo.percentual_ocupacao}%
+
+                        </span>
+
+                        <span class="previsao-silo">
+
+                            Previsão:
+                            ${previsao}
+
                         </span>
 
                     </div>
@@ -89,6 +117,7 @@ function carregarPanoramica() {
                         </canvas>
 
                     </div>
+
                 `;
 
                 grid.appendChild(card);
@@ -111,6 +140,7 @@ function carregarPanoramica() {
             );
 
         });
+
 }
 
 function criarGrafico(id, ocupacao, status) {
@@ -128,8 +158,11 @@ function criarGrafico(id, ocupacao, status) {
         obterCor(status);
 
     graficos[id] = new Chart(
+
         canvas,
+
         {
+
             type: "doughnut",
 
             data: {
@@ -140,7 +173,9 @@ function criarGrafico(id, ocupacao, status) {
                 ],
 
                 datasets: [
+
                     {
+
                         data: [
                             ocupacao,
                             100 - ocupacao
@@ -152,8 +187,11 @@ function criarGrafico(id, ocupacao, status) {
                         ],
 
                         borderWidth: 0
+
                     }
+
                 ]
+
             },
 
             options: {
@@ -179,7 +217,9 @@ function criarGrafico(id, ocupacao, status) {
             }
 
         }
+
     );
+
 }
 
 carregarPanoramica();

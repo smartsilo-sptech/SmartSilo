@@ -24,10 +24,16 @@ function carregarResumo() {
         document.getElementById("kpiTotalSilos").innerHTML =
         dados[0].totalSilos;
 
+    });
+
+    fetch("/dashboard/resumo-status-silos")
+    .then(res => res.json())
+    .then(dados => {
+
         document.getElementById("kpiAlertas").innerHTML =
-            Number(dados[0].silosCheios)
-            +
-            Number(dados[0].silosQuaseCheios);
+        Number(dados[0].silosCheios)
+        +
+        Number(dados[0].silosQuaseCheios);
 
     });
 
@@ -39,8 +45,12 @@ function carregarSiloCritico() {
     .then(res => res.json())
     .then(dados => {
 
-        document.getElementById("kpiSiloCritico").innerHTML =
-        `${dados[0].nomeSilo} (${dados[0].percentual_ocupacao}%)`;
+        if (dados.length > 0) {
+
+            document.getElementById("kpiSiloCritico").innerHTML =
+            `${dados[0].nomeSilo} (${dados[0].percentual_ocupacao}%)`;
+
+        }
 
     });
 
@@ -52,8 +62,12 @@ function carregarPrevisao() {
     .then(res => res.json())
     .then(dados => {
 
-        document.getElementById("kpiPrevisao").innerHTML =
-        `${dados[0].diasPrevisao} dias`;
+        if (dados.length > 0) {
+
+            document.getElementById("kpiPrevisao").innerHTML =
+            `${dados[0].diasPrevisao} dias`;
+
+        }
 
     });
 
@@ -61,14 +75,20 @@ function carregarPrevisao() {
 
 function carregarGraficoBarras() {
 
-    fetch("/dashboard/monitoramento-silos")
+    fetch("/dashboard/resumo-status-silos")
+
     .then(res => res.json())
+
     .then(dados => {
+
+        console.log("Resumo Status:", dados);
 
         const info = dados[0];
 
-        if(graficoBarras) {
+        if (graficoBarras) {
+
             graficoBarras.destroy();
+
         }
 
         graficoBarras = new Chart(
@@ -105,10 +125,10 @@ function carregarGraficoBarras() {
 
                         backgroundColor: [
 
-                            "#c1121f",
-                            "#fcbf49",
-                            "#2a9d8f",
-                            "#adb5bd"
+                            "#AB0F0F",
+                            "#FFCD04",
+                            "#0EAC50",
+                            "#BDBDBD"
 
                         ]
 
@@ -140,7 +160,7 @@ function carregarGraficoBarras() {
 
                             ticks: {
 
-                                precision: 0
+                                stepSize: 1
 
                             }
 
@@ -154,73 +174,28 @@ function carregarGraficoBarras() {
 
         );
 
+    })
+
+    .catch(erro => {
+
+        console.error(
+            "Erro gráfico:",
+            erro
+        );
+
     });
 
-    fetch("/dashboard/ultima-leitura")
-    .then(res => res.json())
-    .then(dados => {
-
-        renderizarGridSilos(dados);
-
-    });
-
-}
-
-function renderizarGridSilos(dados) {
-
-    const container =
-    document.getElementById("gridSilos");
-
-    container.innerHTML = "";
-
-    for(let i = 0; i < dados.length; i++) {
-
-        let classe = "box-silo-green";
-        let interna = "internal-box-green";
-        let status = "Normal";
-
-        if(dados[i].percentual_ocupacao >= 90) {
-
-            classe = "box-silo-red";
-            interna = "internal-box-red";
-            status = "Crítico";
-
-        } else if(dados[i].percentual_ocupacao >= 80) {
-
-            classe = "box-silo-yellow";
-            interna = "internal-box-yellow";
-            status = "Alerta";
-        }
-
-        container.innerHTML += `
-
-            <div class="${classe}">
-
-                <div class="${interna}">
-
-                    <span class="title-box">
-
-                        ${dados[i].nomeSilo}
-
-                        (${dados[i].percentual_ocupacao}%)
-
-                        - ${status}
-
-                    </span>
-
-                </div>
-
-            </div>
-
-        `;
-    }
 }
 
 function carregarRecomendacoes() {
 
     fetch("/dashboard/silo-mais-critico")
+
     .then(res => res.json())
+
     .then(dados => {
+
+        if (dados.length === 0) return;
 
         const silo = dados[0];
 
