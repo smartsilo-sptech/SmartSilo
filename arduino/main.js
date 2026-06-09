@@ -1,127 +1,186 @@
-// importa os bibliotecas necessários
-const serialport = require('serialport');
-const express = require('express');
-const mysql = require('mysql2');
+const serialport = require("serialport");
+const express = require("express");
+const mysql = require("mysql2");
 
-// constantes para configurações
 const SERIAL_BAUD_RATE = 9600;
 const SERVIDOR_PORTA = 3300;
 
-// habilita ou desabilita a inserção de dados no banco de dados
 const HABILITAR_OPERACAO_INSERIR = true;
 
-// função para comunicação serial
-const serial = async (
-    valoresDistancia,
-    valoresPercentual
-) => {
+// CONFIG DO SILO
+const config = {
+  alturaCilindro: 0.156,
+  alturaCone: 0.0568,
+  raioSilo: 0.0426,
+  pi: 3.14,
+  percentualLimite: 85.0,
+  percentualAlerta: 75.0,
+};
 
-    // conexão com o banco de dados MySQL
-    let poolBancoDados = mysql.createPool(
-        {
-            // ip da maquina ssh
-            host: '100.69.247.75',
-            user: 'administrador',
-            password: 'Urubu@100',
-            database: 'sistema_silos',
-            port: 3307
-        }
-    ).promise();
+function calcularSilo(distancia) {
+  const areaCirculo = config.raioSilo * config.raioSilo * config.pi;
 
-    // lista as portas seriais disponíveis e procura pelo Arduino
-    const portas = await serialport.SerialPort.list();
-    const portaArduino = portas.find((porta) => porta.vendorId == 2341 && porta.productId == 43);
-    if (!portaArduino) {
-        throw new Error('O arduino não foi encontrado em nenhuma porta serial');
-    }
+  const volumeCilindro = areaCirculo * config.alturaCilindro;
 
-    // configura a porta serial com o baud rate especificado
-    const arduino = new serialport.SerialPort(
-        {
-            path: portaArduino.path,
-            baudRate: SERIAL_BAUD_RATE
-        }
-    );
+  const volumeCone = (1 / 3) * areaCirculo * config.alturaCone;
 
-    // evento quando a porta serial é aberta
-    arduino.on('open', () => {
-        console.log(`A leitura do arduino foi iniciada na porta ${portaArduino.path} utilizando Baud Rate de ${SERIAL_BAUD_RATE}`);
-    });
+  const volumeTotal = volumeCilindro + volumeCone;
 
-    // processa os dados recebidos do Arduino
-    arduino.pipe(new serialport.ReadlineParser({ delimiter: '\r\n' })).on('data', async (data) => {
-        console.log(data);
-        const valores = data.split(';');
-        const distancia = parseFloat(valores[0]);
-        const percentual = parseFloat(valores[1]);
+  let volumeGraos = 0;
 
-        // armazena os valores dos sensores nos arrays correspondentes
-        valoresDistancia.push(distancia);
-        valoresPercentual.push(percentual);
+  if (distancia >= config.alturaCilindro) {
+    let alturaGraosCone = config.alturaCilindro + config.alturaCone - distancia;
 
-        // insere os dados no banco de dados (se habilitado)
-        if (HABILITAR_OPERACAO_INSERIR) {
+    if (alturaGraosCone < 0) alturaGraosCone = 0;
 
-            // este insert irá inserir os dados na tabela "medida"
-            await poolBancoDados.execute(
-                'INSERT INTO registro (distancia_sensor, percentual_ocupacao, fkSensor) VALUES (?, ?, 1)',
-                [distancia, percentual]
-            );
-            console.log("valores inseridos no banco: ", distancia + ", " + percentual);
+    volumeGraos = (1 / 3) * areaCirculo * alturaGraosCone;
+  } else {
+    let alturaGraosCilindro = config.alturaCilindro - distancia;
 
-        }
+    if (alturaGraosCilindro < 0) alturaGraosCilindro = 0;
 
-    });
+    volumeGraos = volumeCone + alturaGraosCilindro * areaCirculo;
+  }
 
-    // evento para lidar com erros na comunicação serial
-    arduino.on('error', (mensagem) => {
-        console.error(`Erro no arduino (Mensagem: ${mensagem}`)
-    });
+  const percentual = (volumeGraos / volumeTotal) * 100;
+
+  let status = 0;
+
+  if (percentual >= config.percentualLimite) {
+    status = 2;
+  } else if (percentual >= config.percentualAlerta) {
+    status = 1;
+  }
+
+  return {
+    distancia,
+    percentual,
+    status,
+  };
 }
 
-// função para criar e configurar o servidor web
-const servidor = (
-    valoresDistancia,
-    valoresPercentual
-) => {
-    const app = express();
-
-    // configurações de requisição e resposta
-    app.use((request, response, next) => {
-        response.header('Access-Control-Allow-Origin', '*');
-        response.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
-        next();
-    });
-
-    // inicia o servidor na porta especificada
-    app.listen(SERVIDOR_PORTA, () => {
-        console.log(`API executada com sucesso na porta ${SERVIDOR_PORTA}`);
-    });
-
-    // define os endpoints da API para cada tipo de sensor
-    app.get('/sensores/analogico', (_, response) => {
-        return response.json(valoresDistancia);
-    });
-    app.get('/sensores/digital', (_, response) => {
-        return response.json(valoresPercentual);
+const serial = async (valoresDistancia, valoresPercentual) => {
+  const poolBancoDados = mysql
+    .createPool({
+      host: "10.18.32.44",
+      user: "administrador",
+      password: "Urubu@100",
+      database: "sistema_silos",
+      port: 3307,
     })
-}
+    .promise();
 
-// função principal assíncrona para iniciar a comunicação serial e o servidor web
+  const portas = await serialport.SerialPort.list();
+
+  const portaArduino = portas.find(
+    (porta) => porta.vendorId == 2341 && porta.productId == 43,
+  );
+
+  if (!portaArduino) {
+    throw new Error("Arduino não encontrado");
+  }
+
+  const arduino = new serialport.SerialPort({
+    path: portaArduino.path,
+    baudRate: SERIAL_BAUD_RATE,
+  });
+
+  arduino.on("open", () => {
+    console.log(`Leitura iniciada em ${portaArduino.path}`);
+  });
+
+  arduino
+    .pipe(
+      new serialport.ReadlineParser({
+        delimiter: "\r\n",
+      }),
+    )
+    .on("data", async (data) => {
+      try {
+        console.log("Recebido:", data);
+
+        const distancia = parseFloat(data);
+
+        if (isNaN(distancia)) {
+          console.log("Valor inválido");
+          return;
+        }
+
+        const resultado = calcularSilo(distancia);
+
+        valoresDistancia.push(resultado.distancia);
+
+        valoresPercentual.push(resultado.percentual);
+
+        if (valoresDistancia.length > 100) {
+          valoresDistancia.shift();
+        }
+
+        if (valoresPercentual.length > 100) {
+          valoresPercentual.shift();
+        }
+
+        if (HABILITAR_OPERACAO_INSERIR) {
+          await poolBancoDados.execute(
+            `
+                        INSERT INTO registro
+                        (
+                            distancia_sensor,
+                            percentual_ocupacao,
+                            fkSensor
+                        )
+                        VALUES
+                        (?, ?, 1)
+                        `,
+            [resultado.distancia, resultado.percentual],
+          );
+
+          console.log(
+            `Inserido -> Distância: ${resultado.distancia} | Percentual: ${resultado.percentual.toFixed(2)}% | Status: ${resultado.status}`,
+          );
+        }
+      } catch (erro) {
+        console.error("Erro ao inserir:", erro);
+      }
+    });
+
+  arduino.on("error", (erro) => {
+    console.error("Erro serial:", erro);
+  });
+};
+
+const servidor = (valoresDistancia, valoresPercentual) => {
+  const app = express();
+
+  app.use((request, response, next) => {
+    response.header("Access-Control-Allow-Origin", "*");
+
+    response.header(
+      "Access-Control-Allow-Headers",
+      "Origin, Content-Type, Accept",
+    );
+
+    next();
+  });
+
+  app.get("/sensores/analogico", (_, response) => {
+    response.json(valoresDistancia);
+  });
+
+  app.get("/sensores/digital", (_, response) => {
+    response.json(valoresPercentual);
+  });
+
+  app.listen(SERVIDOR_PORTA, () => {
+    console.log(`Servidor rodando na porta ${SERVIDOR_PORTA}`);
+  });
+};
+
 (async () => {
-    // arrays para armazenar os valores dos sensores
-    const valoresDistancia = [];
-    const valoresPercentual = [];
+  const valoresDistancia = [];
+  const valoresPercentual = [];
 
-    // inicia a comunicação serial
-    await serial(
-        valoresDistancia,
-        valoresPercentual
-    );
+  await serial(valoresDistancia, valoresPercentual);
 
-    // inicia o servidor web
-    servidor(
-        valoresDistancia,
-        valoresPercentual
-    );
+  servidor(valoresDistancia, valoresPercentual);
 })();
