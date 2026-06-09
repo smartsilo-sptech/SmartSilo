@@ -1,22 +1,85 @@
-USE sistema_silos;
+INSERT INTO silos
+(nomeSilo, volumeTotal, tipo_grao, localSilo, limite_max, limite_min, fkFazenda)
+VALUES
+('Bravo', 1000, 'Milho', 'Setor B', 90, 10, 100),
+('Charlie', 1000, 'Milho', 'Setor C', 90, 10, 100),
+('Delta', 1000, 'Soja', 'Setor D', 90, 10, 100),
+('Echo', 1000, 'Soja', 'Setor E', 90, 10, 100),
+('Foxtrot', 1000, 'Milho', 'Setor F', 90, 10, 100),
+('Golf', 1000, 'Milho', 'Setor G', 90, 10, 100),
+('Hotel', 1000, 'Soja', 'Setor H', 90, 10, 100),
+('India', 1000, 'Soja', 'Setor I', 90, 10, 100),
+('Juliet', 1000, 'Milho', 'Setor J', 90, 10, 100);
 
-INSERT INTO dono (nome, email, senha, CPF, telefone) VALUES
-('Claudio', 'claudio@sptech.school', 'senha123', 11122233344, 11912345678);
+-- SENSORES
 
-INSERT INTO empresa (nome, cep, cnpj, fkDono) VALUES
-('Yoki', '06753404', '12345678912345', 1);
+INSERT INTO sensor (numSensor, fkSilo)
+VALUES
+('2',2),
+('3',3),
+('4',4),
+('5',5),
+('6',6),
+('7',7),
+('8',8),
+('9',9),
+('10',10);
 
-INSERT INTO funcionario (tipoFuncionario, nome, email, senha, fkEmpresa) VALUES
-('Gerente', 'Pedro Ablublé', 'pedro@sptech.school', 'senha123', 1);
+-- REGISTROS HISTÓRICOS
 
-INSERT INTO fazenda (nome, cep, fkEmpresaDona) VALUES
-('Abelinha', '12345678', 1);
+INSERT INTO registro
+(distancia_sensor, percentual_ocupacao, dt_registro, fkSensor)
+VALUES
 
-INSERT INTO silos (nomeSilo, fkFazenda) VALUES
-('Alpha', 1);
+(5,62,'2025-11-20 08:00:00',1),
+(5,68,'2025-11-21 08:00:00',1),
+(5,72,'2025-11-22 08:00:00',1),
 
-INSERT INTO sensor (numSensor, fkSilo) VALUES
-('Sensor1A', 1);
+(5,84,'2025-11-20 09:00:00',2),
+(5,86,'2025-11-21 09:00:00',2),
+(5,88,'2025-11-22 09:00:00',2),
 
-INSERT INTO registro (distancia_sensor, percentual_ocupacao, fkSensor) VALUES 
-(2.1, 89.9, 1);
+(5,93,'2025-11-20 10:00:00',3),
+(5,95,'2025-11-21 10:00:00',3),
+(5,97,'2025-11-22 10:00:00',3),
+
+(5,45,'2025-11-20 11:00:00',4),
+(5,52,'2025-11-21 11:00:00',4),
+(5,59,'2025-11-22 11:00:00',4),
+
+(5,81,'2025-11-20 12:00:00',5),
+(5,83,'2025-11-21 12:00:00',5),
+(5,85,'2025-11-22 12:00:00',5),
+
+(5,91,'2025-11-20 13:00:00',6),
+(5,92,'2025-11-21 13:00:00',6),
+(5,94,'2025-11-22 13:00:00',6),
+
+(5,71,'2025-11-20 14:00:00',7),
+(5,73,'2025-11-21 14:00:00',7),
+(5,76,'2025-11-22 14:00:00',7),
+
+(5,87,'2025-11-20 15:00:00',8),
+(5,88,'2025-11-21 15:00:00',8),
+(5,89,'2025-11-22 15:00:00',8),
+
+(5,96,'2025-11-20 16:00:00',9),
+(5,97,'2025-11-21 16:00:00',9),
+(5,98,'2025-11-22 16:00:00',9),
+
+(5,64,'2025-11-20 17:00:00',10),
+(5,67,'2025-11-21 17:00:00',10),
+(5,70,'2025-11-22 17:00:00',10);
+
+-- ALERTAS
+
+INSERT INTO alerta
+(percentual_atingido, dt_ocorrencia, fkRegistro, fkSensor)
+SELECT
+percentual_ocupacao,
+dt_registro,
+idRegistro,
+fkSensor
+FROM registro
+WHERE percentual_ocupacao >= 80;
+
