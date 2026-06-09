@@ -19,7 +19,8 @@ const serial = async (
     // conexão com o banco de dados MySQL
     let poolBancoDados = mysql.createPool(
         {
-            host: '127.0.0.1',
+            // ip da maquina ssh
+            host: '100.69.247.75',
             user: 'administrador',
             password: 'Urubu@100',
             database: 'sistema_silos',
