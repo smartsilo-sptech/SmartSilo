@@ -45,6 +45,8 @@
                 <input type="number" id="ipt_excesso" placeholder="150" value="150">
                 <label>Gasto mensal com medição manual (R$)</label>
                 <input type="number" id="ipt_obra" placeholder="900" value="900">
+                <label>Gasto mensal com medição manual (R$)</label>
+                <input type="number" id="ipt_multi" placeholder="7" value="7">
                 <h2 style="margin-top:16px">SMARTSILO</h2>
                 <label>80% de eficiência (% redução das perdas)</label>
                 <label>Custo do sistema: R$1000</label>
@@ -92,19 +94,20 @@
             let excesso = Number(ipt_excesso.value)
             let preco = Number(ipt_preco.value);
             let perda = Number(ipt_excesso.value)
+            let multiplicador = Number(ipt_multi.value)
 
-            let custoMensal = Number(ipt_obra.value);
-            let eficiencia = 80 / 100;
+            let custoMensal = Number(ipt_obra.value) * multiplicador;
+            let eficiencia = 71.6 / 100;
             let custoSistema = 1000;
 
-            let perdaTotal = excesso * preco;
+            let perdaTotal = excesso * preco * multiplicador;
 
             let formatoBRL = { style: 'currency', currency: 'BRL' };
 
             let custoAnual = custoMensal * 12;
             let totalSemSistema = perdaTotal + custoAnual;
 
-            let novoPrejuizo = perdaTotal * (1 - eficiencia);
+            let novoPrejuizo = perdaTotal * (1 - eficiencia) * multiplicador;
             let totalComSistema = novoPrejuizo;
 
             let economia = totalSemSistema - totalComSistema;
