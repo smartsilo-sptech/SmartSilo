@@ -40,15 +40,15 @@
                 <label>Capacidade total (kg)</label>
                 <input type="number" id="ipt_cap" placeholder="2000000" value="2000000"> <!-- Fiz valores padrão pra n ter que ficar digitando na hora, dps tem que remover -->
                 <label>Preço por quilo (R$)</label>
-                <input type="number" id="ipt_preco" placeholder="1.90" value="1.90">
+                <input type="number" id="ipt_preco" placeholder="5" value="5">
                 <label>Perda por excesso (kg)</label>
                 <input type="number" id="ipt_excesso" placeholder="150" value="150">
                 <label>Gasto mensal com medição manual (R$)</label>
-                <input type="number" id="ipt_obra" placeholder="900" value="900">
+                <input type="number" id="ipt_obra" placeholder="80" value="80">
                 <label>Gasto mensal com medição manual (R$)</label>
-                <input type="number" id="ipt_multi" placeholder="7" value="7">
+                <input type="number" id="ipt_multi" placeholder="15" value="15">
                 <h2 style="margin-top:16px">SMARTSILO</h2>
-                <label>80% de eficiência (% redução das perdas)</label>
+                <label>60% de eficiência (% redução das perdas)</label>
                 <label>Custo do sistema: R$1000</label>
                 <button onclick="calcular()">Ver análise completa</button>
             </div>
@@ -90,14 +90,14 @@
 
     <script>
         function calcular() {
-            let capacidade = Number(ipt_cap.value);
             let excesso = Number(ipt_excesso.value)
             let preco = Number(ipt_preco.value);
-            let perda = Number(ipt_excesso.value)
             let multiplicador = Number(ipt_multi.value)
+            let perda = Number(ipt_excesso.value) * multiplicador;
+            let capacidade = Number(ipt_cap.value);
 
             let custoMensal = Number(ipt_obra.value) * multiplicador;
-            let eficiencia = 71.6 / 100;
+            let eficiencia = 60 / 100;
             let custoSistema = 1000;
 
             let perdaTotal = excesso * preco * multiplicador;
@@ -107,12 +107,12 @@
             let custoAnual = custoMensal * 12;
             let totalSemSistema = perdaTotal + custoAnual;
 
-            let novoPrejuizo = perdaTotal * (1 - eficiencia) * multiplicador;
+            let novoPrejuizo = ((perdaTotal / multiplicador) * (1 - eficiencia)) * multiplicador;
             let totalComSistema = novoPrejuizo;
 
             let economia = totalSemSistema - totalComSistema;
 
-            let payback = (custoSistema / economia) * 12;
+            let payback = ((custoSistema * multiplicador) / economia) * 12;
             
             out_roi.innerHTML = `${payback.toFixed(1)} meses`;
             out_quilos.innerHTML = `${excesso} kg`;
